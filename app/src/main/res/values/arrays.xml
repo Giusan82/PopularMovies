@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Order_By-->
+    <string-array name="order_by_labels">
+        <item>@string/orderBy_more_popular_label</item>
+        <item>@string/orderBy_less_popular_label</item>
+        <item>@string/orderBy_top_rated_label</item>
+        <item>@string/orderBy_low_rated_label</item>
+        <item>@string/orderBy_newest_label</item>
+        <item>@string/orderBy_oldest_label</item>
+    </string-array>
+    <string-array name="order_by_values">
+        <item>@string/orderBy_more_popular_value</item>
+        <item>@string/orderBy_less_popular_value</item>
+        <item>@string/orderBy_top_rated_value</item>
+        <item>@string/orderBy_low_rated_value</item>
+        <item>@string/orderBy_newest_value</item>
+        <item>@string/orderBy_oldest_value</item>
+    </string-array>
+
+    <string-array name="search_type">
+        <item>@string/search_multi</item>
+        <item>@string/search_movies</item>
+        <item>@string/search_tv</item>
+        <item>@string/search_person</item>
+        <item>@string/search_keywords</item>
+    </string-array>
+    <!--Genre IDs-->
+    <string-array name="genre_ids_labels">
+        <item>@string/settings_all_genres_label</item>
+        <item>@string/settings_Action_label</item>
+        <item>@string/settings_Adventure_label</item>
+        <item>@string/settings_Animation_label</item>
+    </string-array>
+    <string-array name="genre_ids_values">
+        <item>@string/settings_all_genres_value</item>
+        <item>@string/settings_Action_value</item>
+        <item>@string/settings_Adventure_value</item>
+        <item>@string/settings_Animation_value</item>
+    </string-array>
+</resources>

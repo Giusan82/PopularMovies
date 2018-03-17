@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="cloud_download_icon" format="reference" />
+    <attr name="more_vertical_icon" format="reference" />
+    <attr name="favorite_icon" format="reference" />
+    <attr name="fullscreen_icon" format="reference" />
+    <attr name="settings_icon" format="reference" />
+    <attr name="search_icon" format="reference" />
+    <attr name="footer_color_background" format="reference"/>
+    <attr name="footer_button_pressed" format="reference"/>
+    <attr name="divider_attr" format="reference"/>
+    <attr name="list_background" format="reference"/>
+    <attr name="list_selector" format="reference"/>
+</resources>

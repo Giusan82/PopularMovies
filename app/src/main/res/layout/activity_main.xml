@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.popularmovies.MainActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/footer"
+       android:layout_alignParentBottom="true"
+       android:id="@+id/linearLayout"
+       android:background="?attr/footer_color_background">
+
+
+       <TextView
+           android:id="@+id/tv_results"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:layout_marginLeft="@dimen/activity_horizontal_margin"
+           android:layout_marginStart="@dimen/activity_horizontal_margin"
+           android:layout_alignParentTop="true"
+           tools:text="Results: 10000"
+           android:textSize="@dimen/text_subtitle"/>
+
+       <ImageView
+           android:id="@+id/iv_navigate_before"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:layout_alignParentTop="true"
+           android:layout_toStartOf="@+id/tv_page"
+           android:background="@drawable/button_footer_selector"
+           app:srcCompat="@drawable/ic_navigate_before" />
+
+       <TextView
+           android:id="@+id/tv_page"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:layout_marginLeft="@dimen/activity_horizontal_margin"
+           android:layout_marginStart="@dimen/activity_horizontal_margin"
+           android:layout_marginRight="@dimen/activity_horizontal_margin"
+           android:layout_marginEnd="@dimen/activity_horizontal_margin"
+           android:layout_alignParentTop="true"
+           android:layout_toStartOf="@+id/iv_navigate_next"
+           tools:text="1/100"/>
+
+       <ImageView
+           android:id="@+id/iv_navigate_next"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:layout_marginRight="@dimen/activity_horizontal_margin"
+           android:layout_marginEnd="@dimen/activity_horizontal_margin"
+           android:layout_alignParentEnd="true"
+           android:layout_alignParentTop="true"
+           android:background="@drawable/button_footer_selector"
+           app:srcCompat="@drawable/ic_navigate_next" />
+   </RelativeLayout>
+
+
+</RelativeLayout>

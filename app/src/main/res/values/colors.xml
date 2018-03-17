@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="darkGrey">#263238</color>
+    <color name="middle_gray">#455a64</color>
+    <color name="dividerGrey">#607d8b</color>
+    <color name="light_grey">@android:color/darker_gray</color>
+</resources>

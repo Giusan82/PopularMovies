@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/category_general">
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_filter">
+        <ListPreference
+            android:defaultValue="@string/settings_orderBy_default"
+            android:entries="@array/order_by_labels"
+            android:entryValues="@array/order_by_values"
+            android:key="@string/settings_orderBy_key"
+            android:title="@string/settings_orderBy_label" />
+        <ListPreference
+            android:defaultValue="@string/settings_genre_ids_default"
+            android:entries="@array/genre_ids_labels"
+            android:entryValues="@array/genre_ids_values"
+            android:key="@string/settings_genre_ids_key"
+            android:title="@string/settings_genre_ids_label" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_show_adult"
+            android:key="@string/settings_adult_content_key"
+            android:summaryOff="@string/checkbox_summary_off"
+            android:summaryOn="@string/checkbox_summary_on"
+            android:title="@string/settings_adult_content_label" />
+    </PreferenceCategory>
+</PreferenceScreen>
