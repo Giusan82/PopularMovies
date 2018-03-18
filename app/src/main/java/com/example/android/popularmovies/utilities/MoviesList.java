@@ -2,13 +2,20 @@ package com.example.android.popularmovies.utilities;
 
 
 import android.content.Context;
+import android.util.Log;
 
+import com.example.android.popularmovies.GridAdapter;
 import com.example.android.popularmovies.R;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class MoviesList implements Serializable {
+    public static final String LOG_TAG = MoviesList.class.getName();
 
     private int mPage; //Page
     private int mTotal_Page;
@@ -179,9 +186,27 @@ public class MoviesList implements Serializable {
 
     public double getPopularity(){return mPopularity;}
 
-    public String getRelease_date(){return mRelease_date;}
+    public String getRelease_date(){return formatDate(mRelease_date);}
 
     public boolean getHasVideo(){return mHasVideo;}
 
     public boolean getIsAdult(){return mIsAdult;}
+
+    //for getting the date conversion
+    public String formatDate(String date) {
+        String newFormatData = "";
+        if (date.length() >= 10) {
+            // Splits the string after 10 char, because the date obtained from server is like this "2017-07-15T21:30:35Z", so this method will give 2017-07-15
+            CharSequence splittedDate = date.subSequence(0, 10);
+            try {
+                Date formatDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(splittedDate.toString());
+                newFormatData = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(formatDate);
+            } catch (ParseException e) {
+                Log.e(LOG_TAG + " -> formatDate", e.getMessage());
+            }
+        } else {
+            newFormatData = date;
+        }
+        return newFormatData;
+    }
 }

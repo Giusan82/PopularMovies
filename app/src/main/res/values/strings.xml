@@ -14,6 +14,8 @@
     <!--Strings for DetailsActivity-->
     <string name="original_title"><![CDATA[<b>Original Title:</b>]]> %1$s</string>
     <string name="description"><![CDATA[<b>Description:</b><br/>]]> %1$s</string>
+    <string name="release_date"><![CDATA[<b>Released:</b>]]> %1$s</string>
+    <string name="genres"><![CDATA[<b>Genre:</b>]]> %1$s</string>
 
 
     <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
