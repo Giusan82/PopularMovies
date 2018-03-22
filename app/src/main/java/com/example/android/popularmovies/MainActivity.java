@@ -1,19 +1,23 @@
 package com.example.android.popularmovies;
 
+
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +25,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.popularmovies.utilities.DataLoader;
 import com.example.android.popularmovies.utilities.MoviesList;
+import com.example.android.popularmovies.utilities.SharedData;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,6 +41,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesList>>,
         SharedPreferences.OnSharedPreferenceChangeListener{
     private static final int LOADER_ID = 0;
+
     private static final String SERVER_URL = "https://api.themoviedb.org/3/";
     private static final String MOVIE_PATH = "movie";
     private static final String DISCOVER_PATH = "discover";
@@ -45,11 +51,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private final static String WITH_GENRE_PARAM = "with_genres";
     private final static String SORT_BY_PARAM = "sort_by";
     private final static String PAGE_PARAM = "page"; //this set the page displayed
-    private final static String API_KEY = "api_key"; //this is the api key of unsplash.com
+    private final static String API_KEY = "api_key"; //this is the api key of themoviedb.org
+    private final static String INCLUDE_ADULT_PARAM = "include_adult";
+    private final static String INCLUDE_VIDEO_PARAM = "include_video";
     private RecyclerView recyclerView;
     private ArrayList<MoviesList> mItems;
     private GridAdapter adapter;
     private SharedPreferences sharedPrefs;
+    private String[] searchValue;
 
     private LoaderManager loaderManager;
     private TextView mPages_tv;
@@ -60,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ImageView mNext_page_iv;
     private int mPage = 1;
     private int mTotal_page;
+    private ProgressBar mLoading_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mResults_tv = findViewById(R.id.tv_results);
         mPrevius_page_iv = findViewById(R.id.iv_navigate_before);
         mNext_page_iv = findViewById(R.id.iv_navigate_next);
+        searchValue = getResources().getStringArray(R.array.search_type_value);
+        mLoading_list = findViewById(R.id.loading_list);
 
         mPrevius_page_iv.setOnClickListener(previousPage);
         mNext_page_iv.setOnClickListener(nextPage);
@@ -85,7 +97,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Get a reference to the LoaderManager, in order to interact with loaders.
         loaderManager = getLoaderManager();
-        loaderManager.initLoader(LOADER_ID, null, this);
+        if (isConnected()) {
+            loaderManager.initLoader(LOADER_ID, null, this);
+        }else{
+            String title = getString(R.string.no_internet_title);
+            String message = getString(R.string.no_internet);
+            alertDialogMessage(title, message);
+        }
+
 
         //the ArrayList is initialized
         mItems = new ArrayList<>();
@@ -139,7 +158,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 //and notify to adapter to update the data
                 adapter.notifyDataSetChanged();
+                mLoading_list.setVisibility(View.GONE);
             }
+        }else {
+            mLoading_list.setVisibility(View.GONE);
+            String title = getString(R.string.no_internet_title);
+            String message = getString(R.string.no_internet);
+            alertDialogMessage(title, message);
         }
     }
 
@@ -186,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         searchTypeAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         searchType_spinner.setAdapter(searchTypeAdapter);
         searchType_spinner.setOnItemSelectedListener(searchTypeListener);
+        searchType_spinner.setSelection(SharedData.getSearchType(this));
         return true;
     }
 
@@ -193,11 +219,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             String selection = (String) adapterView.getItemAtPosition(i);
+            if(!TextUtils.isEmpty(selection)){
+                if(selection.equals(getString(R.string.search_movies))){
+                    Log.e("selection", selection);
+                    SharedData.setSearchType(getApplicationContext(), i);
+                }
+                if(selection.equals(getString(R.string.search_tv))){
+                    Log.e("selection", selection);
+                    SharedData.setSearchType(getApplicationContext(), i);
+                }
+            }
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
-
+            SharedData.getSearchType(getApplicationContext());
         }
     };
 
@@ -216,21 +252,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private URL builderUrl(String query) {
         String orderBy = sharedPrefs.getString(getString(R.string.settings_orderBy_key), getString(R.string.settings_orderBy_default));
         String genre = sharedPrefs.getString(getString(R.string.settings_genre_ids_key), getString(R.string.settings_genre_ids_default));
+        Boolean adult = sharedPrefs.getBoolean(getString(R.string.settings_adult_content_key), getResources().getBoolean(R.bool.pref_include_adult));
+        Boolean video = sharedPrefs.getBoolean(getString(R.string.settings_include_video_key), getResources().getBoolean(R.bool.pref_include_video));
+        String type = searchValue[SharedData.getSearchType(this)];
+
         Uri.Builder builtUri;
         builtUri = Uri.parse(SERVER_URL).buildUpon();
         if (query == null || query.isEmpty()) {
             builtUri.appendPath(DISCOVER_PATH)
-                    .appendPath(MOVIE_PATH)
+                    .appendPath(type)
                     .appendQueryParameter(SORT_BY_PARAM, orderBy)
                     .appendQueryParameter(WITH_GENRE_PARAM, genre);
         }else{
             Log.e("Query", query);
             builtUri.appendPath(SEARCH_PATH)
-                    .appendPath(MOVIE_PATH)
+                    .appendPath(type)
                     .appendQueryParameter(QUERY_PARAM, query);
         }
         builtUri.appendQueryParameter(PAGE_PARAM, String.valueOf(mPage))
                 .appendQueryParameter(API_KEY, getString(R.string.api_key))
+                .appendQueryParameter(INCLUDE_ADULT_PARAM, adult.toString())
+                .appendQueryParameter(INCLUDE_VIDEO_PARAM, video.toString())
                 .build();
 
         URL url = null;
@@ -250,9 +292,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 mPage =1;
                 query = input;
                 refresh();
-                Toast.makeText(this, "Searching...", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "No connection", Toast.LENGTH_SHORT).show();
+            mLoading_list.setVisibility(View.GONE);
+            String title = getString(R.string.no_internet_title);
+            String message = getString(R.string.no_internet);
+            alertDialogMessage(title, message);
         }
     }
 
@@ -272,11 +316,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if(key.equals(getString(R.string.settings_genre_ids_key))){
-
-        }
         mPage =1;
+        clear();
         refresh();
+        mLoading_list.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -284,5 +328,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    //build an alert dialog message for no internet connection
+    public void alertDialogMessage(String title, String message) {
+        int style = R.style.alertDialog;
+        int icon = R.drawable.ic_portable_wifi_off;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
+        builder.setTitle(title);
+        builder.setIcon(icon);
+        builder.setMessage(message);
+        builder.setNegativeButton(getString(R.string.close_button), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        builder.setPositiveButton(getString(R.string.refresh_button), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                refresh();
+            }
+        });
+        builder.setCancelable(false);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

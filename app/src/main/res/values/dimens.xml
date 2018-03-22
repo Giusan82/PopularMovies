@@ -2,11 +2,27 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin_list">8dp</dimen>
+    <dimen name="activity_vertical_margin_list">8dp</dimen>
     <dimen name="footer">45dp</dimen>
     <dimen name="buttons_size">48dp</dimen>
     <dimen name="divider">1dp</dimen>
 
+    <dimen name="poster_size_height">231dp</dimen>
+    <dimen name="poster_size_width">154dp</dimen>
+    <dimen name="poster_size_height_list">319dp</dimen>
+    <dimen name="poster_size_width_list">215dp</dimen>
+    <dimen name="header_image_size_height">220dp</dimen>
+
+    <dimen name="card_margin">5dp</dimen>
+    <dimen name="text_card_margin">7dp</dimen>
+    <dimen name="cardCornerRadius">3dp</dimen>
+    <dimen name="cardElevation">4dp</dimen>
+
+    <dimen name="popularity_size">75dp</dimen>
+
     <!--Text dimensions-->
+    <dimen name="text_popularity">18sp</dimen>
     <dimen name="text_title">16sp</dimen>
-    <dimen name="text_subtitle">12sp</dimen>
+    <dimen name="text_subtitle">11sp</dimen>
 </resources>

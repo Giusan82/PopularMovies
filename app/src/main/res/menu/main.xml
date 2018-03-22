@@ -5,7 +5,7 @@
     tools:context="com.example.android.photogallery.MainActivity">
     <item
         android:id="@+id/search_view"
-        android:icon="?attr/search_icon"
+        android:icon="@drawable/ic_search_24dp"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|always" />
@@ -14,17 +14,9 @@
         app:actionViewClass="android.widget.Spinner"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/menu_overflow"
-        android:icon="?attr/more_vertical_icon"
-        android:title=""
-        app:showAsAction="always">
-        <menu>
-            <item
-                android:id="@+id/action_settings"
-                android:icon="?attr/settings_icon"
-                android:orderInCategory="1"
-                android:title="@string/settings_menu"
-                app:showAsAction="never" />
-        </menu>
-    </item>
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_24dp"
+        android:orderInCategory="1"
+        android:title="@string/settings_menu"
+        app:showAsAction="always" />
 </menu>

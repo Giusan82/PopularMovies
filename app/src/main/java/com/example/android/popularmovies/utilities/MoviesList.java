@@ -4,7 +4,6 @@ package com.example.android.popularmovies.utilities;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.android.popularmovies.GridAdapter;
 import com.example.android.popularmovies.R;
 
 import java.io.Serializable;
@@ -12,11 +11,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MoviesList implements Serializable {
     public static final String LOG_TAG = MoviesList.class.getName();
+    private static final String SEPARATOR_LIST = ", ";
+    private static final String END_LIST = ".";
 
+    private Context mContext;
     private int mPage; //Page
     private int mTotal_Page;
     private int mTotal_results;
@@ -27,19 +30,27 @@ public class MoviesList implements Serializable {
     private String mDescription;
     private String mPoster_Path;
     private String mBackground_Path;
-    private ArrayList<String> mGenre_ids;
+    private ArrayList<String> mGenres;
     private int mVote_Count;
     private double mVote_Average;
     private double mPopularity;
     private String mRelease_date;
     private boolean mHasVideo;
     private boolean mIsAdult;
+    private ArrayList<String> mProduction_Companies;
+    private ArrayList<String> mProduction_Countries;
+    private int mRuntime;
+    private ArrayList<String> mSpoken_Languages;
+    private String mStatus;
+    private int mNumberOfSeasons;
+    private int mNumberOfEpisodes;
 
     /**
      * Constructor
      */
     public MoviesList(){}
-    public MoviesList(int page,
+    public MoviesList(Context context,
+                      int page,
                       int total_page,
                       int total_results,
                       int id,
@@ -49,14 +60,14 @@ public class MoviesList implements Serializable {
                       String description,
                       String poster_path,
                       String background_path,
-                      ArrayList<String> genre_ids,
                       int vote_count,
                       double vote_average,
                       double popularity,
                       String release_date,
                       boolean hasVideo,
                       boolean isAdult)
-    {   this.mPage = page;
+    {   this.mContext = context;
+        this.mPage = page;
         this.mTotal_Page = total_page;
         this.mTotal_results = total_results;
         this.mID = id;
@@ -66,13 +77,64 @@ public class MoviesList implements Serializable {
         this.mDescription = description;
         this.mPoster_Path = poster_path;
         this.mBackground_Path = background_path;
-        this.mGenre_ids = genre_ids;
         this.mVote_Count = vote_count;
         this.mVote_Average = vote_average;
         this.mPopularity = popularity;
         this.mRelease_date = release_date;
         this.mHasVideo = hasVideo;
         this.mIsAdult = isAdult;
+    }
+
+    public MoviesList(Context context,
+                      int page,
+                      int total_page,
+                      int total_results,
+                      int id,
+                      String title,
+                      String original_title,
+                      String original_language,
+                      String description,
+                      String poster_path,
+                      String background_path,
+                      ArrayList<String> genres,
+                      int vote_count,
+                      double vote_average,
+                      double popularity,
+                      String release_date,
+                      boolean hasVideo,
+                      boolean isAdult,
+                      ArrayList<String> production_companies,
+                      ArrayList<String> production_countries,
+                      int runtime,
+                      ArrayList<String> spoken_languages,
+                      String status,
+                      int seasons,
+                      int episodes)
+    {   this.mContext = context;
+        this.mPage = page;
+        this.mTotal_Page = total_page;
+        this.mTotal_results = total_results;
+        this.mID = id;
+        this.mTitle = title;
+        this.mOriginal_title = original_title;
+        this.mOriginal_language = original_language;
+        this.mDescription = description;
+        this.mPoster_Path = poster_path;
+        this.mBackground_Path = background_path;
+        this.mGenres = genres;
+        this.mVote_Count = vote_count;
+        this.mVote_Average = vote_average;
+        this.mPopularity = popularity;
+        this.mRelease_date = release_date;
+        this.mHasVideo = hasVideo;
+        this.mIsAdult = isAdult;
+        this.mProduction_Companies = production_companies;
+        this.mProduction_Countries = production_countries;
+        this.mRuntime = runtime;
+        this.mSpoken_Languages = spoken_languages;
+        this.mStatus = status;
+        this.mNumberOfSeasons = seasons;
+        this.mNumberOfEpisodes = episodes;
     }
 
     /**
@@ -112,70 +174,16 @@ public class MoviesList implements Serializable {
         return mBackground_Path;
     }
 
-    public ArrayList<String> getGenre_ids() {
-        return mGenre_ids;
+    public String getGenres() {
+        return formatList(mGenres);
     }
 
-    public String getGenre(Context context, String id){
-        String genre = "";
-        if (id.equals(context.getString(R.string.settings_Action_value))){
-            genre = context.getString(R.string.settings_Action_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Adventure_value))){
-            genre = context.getString(R.string.settings_Adventure_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Animation_value))){
-            genre = context.getString(R.string.settings_Animation_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Comedy_value))){
-            genre = context.getString(R.string.settings_Comedy_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Crime_value))){
-            genre = context.getString(R.string.settings_Crime_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Documentary_value))){
-            genre = context.getString(R.string.settings_Documentary_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Drama_value))){
-            genre = context.getString(R.string.settings_Drama_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Family_value))){
-            genre = context.getString(R.string.settings_Family_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Fantasy_value))){
-            genre = context.getString(R.string.settings_Family_label);
-        }
-        if (id.equals(context.getString(R.string.settings_History_value))){
-            genre = context.getString(R.string.settings_History_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Horror_value))){
-            genre = context.getString(R.string.settings_Horror_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Music_value))){
-            genre = context.getString(R.string.settings_Music_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Mystery_value))){
-            genre = context.getString(R.string.settings_Mystery_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Romance_value))){
-            genre = context.getString(R.string.settings_Romance_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Science_Fiction_value))){
-            genre = context.getString(R.string.settings_Science_Fiction_label);
-        }
-        if (id.equals(context.getString(R.string.settings_TV_Movie_value))){
-            genre = context.getString(R.string.settings_TV_Movie_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Thriller_value))){
-            genre = context.getString(R.string.settings_Thriller_label);
-        }
-        if (id.equals(context.getString(R.string.settings_War_value))){
-            genre = context.getString(R.string.settings_War_label);
-        }
-        if (id.equals(context.getString(R.string.settings_Western_value))){
-            genre = context.getString(R.string.settings_Western_label);
-        }
-        return genre;
+    public String getProductionCompanies() {
+        return formatList(mProduction_Companies);
+    }
+
+    public String getProductionCountries(){
+        return formatList(mProduction_Countries);
     }
 
     public int getVote_Count() {
@@ -191,6 +199,24 @@ public class MoviesList implements Serializable {
     public boolean getHasVideo(){return mHasVideo;}
 
     public boolean getIsAdult(){return mIsAdult;}
+
+    public int getRuntime(){return mRuntime;}
+
+    public String getSpokenLanguages(){
+        return formatList(mSpoken_Languages);
+    }
+
+    public String getStatus(){
+        return mStatus;
+    }
+
+    public int getNumberOfSeasons(){
+        return mNumberOfSeasons;
+    }
+
+    public int getNumberOfEpisodes(){
+        return mNumberOfEpisodes;
+    }
 
     //for getting the date conversion
     public String formatDate(String date) {
@@ -208,5 +234,20 @@ public class MoviesList implements Serializable {
             newFormatData = date;
         }
         return newFormatData;
+    }
+
+    private String formatList(List<String> list) {
+        if(list.size() != 0){
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < list.size(); i++) {
+                builder.append(list.get(i));
+                builder.append(SEPARATOR_LIST);
+            }
+            String final_string = builder.toString();
+            final_string = final_string.substring(0, final_string.lastIndexOf(SEPARATOR_LIST)) + END_LIST;
+            return final_string;
+        }else{
+            return mContext.getString(R.string.unknown);
+        }
     }
 }

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/category_general">
-
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/category_filter">
         <ListPreference
             android:defaultValue="@string/settings_orderBy_default"
@@ -17,10 +14,16 @@
             android:key="@string/settings_genre_ids_key"
             android:title="@string/settings_genre_ids_label" />
         <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="@bool/pref_show_adult"
+            android:defaultValue="@bool/pref_include_adult"
             android:key="@string/settings_adult_content_key"
             android:summaryOff="@string/checkbox_summary_off"
             android:summaryOn="@string/checkbox_summary_on"
             android:title="@string/settings_adult_content_label" />
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:defaultValue="@bool/pref_include_video"
+            android:key="@string/settings_include_video_key"
+            android:summaryOff="@string/checkbox_summary_off"
+            android:summaryOn="@string/checkbox_summary_on"
+            android:title="@string/settings_include_video_label" />
     </PreferenceCategory>
 </PreferenceScreen>

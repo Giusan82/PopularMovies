@@ -6,37 +6,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.popularmovies.DetailsActivity">
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ProgressBar
-            android:id="@+id/loading_indicator"
+            android:id="@+id/loading_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:id="@+id/loading_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             app:layout_constraintBottom_toTopOf="@+id/iv_poster"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_header"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="@dimen/header_image_size_height"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:src="@drawable/placeholder"
             android:scaleType="centerCrop" />
 
+        <ProgressBar
+            android:id="@+id/loading_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_poster"
+            app:layout_constraintEnd_toStartOf="@+id/tv_original_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_header" />
+
         <ImageView
             android:id="@+id/iv_poster"
-            android:layout_width="92dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/poster_size_width"
+            android:layout_height="@dimen/poster_size_height"
             android:layout_marginStart="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:scaleType="fitStart"
+            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            android:src="@drawable/placeholder"
+            android:src="@drawable/placeholder_poster"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_header" />
 
@@ -47,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_popularity"
             app:layout_constraintStart_toEndOf="@+id/iv_poster"
             app:layout_constraintTop_toTopOf="@+id/iv_poster"
             tools:text="Original Title: Ferdinand" />
@@ -58,10 +93,85 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_popularity"
             app:layout_constraintStart_toEndOf="@+id/iv_poster"
             app:layout_constraintTop_toBottomOf="@+id/tv_original_title"
+            android:textSize="@dimen/text_subtitle"
             tools:text="2017-12-09" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:numStars="5"
+            android:rating="3.5"
+            android:stepSize="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/tv_release_date" />
+
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
+            tools:text="7.0" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rating"
+            tools:text="Status: Released" />
+
+        <TextView
+            android:id="@+id/tv_popularity"
+            android:layout_width="@dimen/popularity_size"
+            android:layout_height="@dimen/popularity_size"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/shape_circle"
+            android:gravity="center"
+            android:textSize="@dimen/text_popularity"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_header"
+            tools:text="72.7" />
+
+        <TextView
+            android:id="@+id/tv_production_companies"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status"
+            tools:text="Production Companies: Twentieth Century Fox Animation"
+            android:textSize="@dimen/text_subtitle"/>
+
+        <TextView
+            android:id="@+id/tv_production_coutries"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/tv_production_companies"
+            tools:text="Production Countries: United States of America"
+            android:textSize="@dimen/text_subtitle"/>
 
         <TextView
             android:id="@+id/tv_genres"
@@ -70,45 +180,47 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/iv_poster"
-            app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
-            tools:text="Animation" />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:numStars="5"
-            android:rating="3.5"
-            android:stepSize="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_poster"
-            app:layout_constraintTop_toBottomOf="@+id/tv_genres" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_production_coutries"
+            tools:text="Genre: Animation"
+            android:textSize="@dimen/text_subtitle"/>
 
         <TextView
-            android:id="@+id/tv_rating"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_runtime"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster"
             app:layout_constraintTop_toBottomOf="@+id/tv_genres"
-            tools:text="7.0" />
+            tools:text="Duration: 107 min"
+            android:textSize="@dimen/text_subtitle"/>
 
-
+        <TextView
+            android:id="@+id/tv_spoken_languages"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_poster"
+            app:layout_constraintTop_toBottomOf="@+id/tv_runtime"
+            tools:text="Languages: English"
+            android:textSize="@dimen/text_subtitle"/>
+    </android.support.constraint.ConstraintLayout>
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            app:layout_constraintTop_toBottomOf="@+id/iv_poster"
-            tools:text="Ferdinand, a little bull, prefers sitting quietly under a cork tree just smelling the flowers versus jumping around, snorting, and butting heads with other bulls. As Ferdinand grows big and strong, his temperament remains mellow, but one day five men come to choose 'the biggest, fastest, roughest bull' for the bullfights in Madrid and Ferdinand is mistakenly chosen.  Based on the classic 1936 children's book by Munro Leaf." />
-
-
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            app:layout_constraintTop_toBottomOf="@+id/cl_content"
+            tools:text="Description: \nFerdinand, a little bull, prefers sitting quietly under a cork tree just smelling the flowers versus jumping around, snorting, and butting heads with other bulls. As Ferdinand grows big and strong, his temperament remains mellow, but one day five men come to choose 'the biggest, fastest, roughest bull' for the bullfights in Madrid and Ferdinand is mistakenly chosen.  Based on the classic 1936 children's book by Munro Leaf."
+            android:visibility="gone"/>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>
 

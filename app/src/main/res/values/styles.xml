@@ -6,8 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="search_icon">@drawable/ic_search_24dp</item>
-        <item name="more_vertical_icon">@drawable/ic_more_vert_24dp</item>
         <item name="footer_color_background">@color/darkGrey</item>
         <item name="footer_button_pressed">@color/middle_gray</item>
         <item name="android:dropDownListViewStyle">@style/Spinner_style</item>
@@ -15,6 +13,10 @@
         <item name="divider_attr">@color/dividerGrey</item>
         <item name="list_background">@color/darkGrey</item>
         <item name="list_selector">@color/middle_gray</item>
+        <item name="android:windowBackground">@drawable/gradient_light_grey</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="colorTextAttr">@color/colorText</item>
+        <item name="colorDialogBackgroundAttr">@color/middle_gray</item>
     </style>
 
     <style name="Spinner_style" parent="@style/Base.Animation.AppCompat.DropDownUp">
@@ -31,11 +33,18 @@
 
     <!-- Setting activity theme-->
     <style name="setting_activity" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:windowBackground">@color/light_grey</item>
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/middle_gray</item>
+        <item name="android:textColorPrimary">@color/colorText</item>
+        <item name="android:textColorSecondary">@color/colorText</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="alertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/colorText</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="colorAccent">@color/colorText</item>
+        <item name="android:background">?attr/colorDialogBackgroundAttr</item>
     </style>
 </resources>

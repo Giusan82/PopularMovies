@@ -17,25 +17,59 @@
         <item>@string/orderBy_newest_value</item>
         <item>@string/orderBy_oldest_value</item>
     </string-array>
-
+    <!--Search type spinner-->
     <string-array name="search_type">
-        <item>@string/search_multi</item>
         <item>@string/search_movies</item>
         <item>@string/search_tv</item>
-        <item>@string/search_person</item>
-        <item>@string/search_keywords</item>
     </string-array>
+    <string-array name="search_type_value">
+        <item>@string/search_movies_value</item>
+        <item>@string/search_tv_value</item>
+    </string-array>
+
     <!--Genre IDs-->
     <string-array name="genre_ids_labels">
         <item>@string/settings_all_genres_label</item>
         <item>@string/settings_Action_label</item>
         <item>@string/settings_Adventure_label</item>
         <item>@string/settings_Animation_label</item>
+        <item>@string/settings_Comedy_label</item>
+        <item>@string/settings_Crime_label</item>
+        <item>@string/settings_Documentary_label</item>
+        <item>@string/settings_Drama_label</item>
+        <item>@string/settings_Family_label</item>
+        <item>@string/settings_Fantasy_label</item>
+        <item>@string/settings_History_label</item>
+        <item>@string/settings_Horror_label</item>
+        <item>@string/settings_Music_label</item>
+        <item>@string/settings_Mystery_label</item>
+        <item>@string/settings_Romance_label</item>
+        <item>@string/settings_Science_Fiction_label</item>
+        <item>@string/settings_TV_Movie_label</item>
+        <item>@string/settings_Thriller_label</item>
+        <item>@string/settings_War_label</item>
+        <item>@string/settings_Western_label</item>
     </string-array>
     <string-array name="genre_ids_values">
         <item>@string/settings_all_genres_value</item>
         <item>@string/settings_Action_value</item>
         <item>@string/settings_Adventure_value</item>
         <item>@string/settings_Animation_value</item>
+        <item>@string/settings_Comedy_value</item>
+        <item>@string/settings_Crime_value</item>
+        <item>@string/settings_Documentary_value</item>
+        <item>@string/settings_Drama_value</item>
+        <item>@string/settings_Family_value</item>
+        <item>@string/settings_Fantasy_value</item>
+        <item>@string/settings_History_value</item>
+        <item>@string/settings_Horror_value</item>
+        <item>@string/settings_Music_value</item>
+        <item>@string/settings_Mystery_value</item>
+        <item>@string/settings_Romance_value</item>
+        <item>@string/settings_Science_Fiction_value</item>
+        <item>@string/settings_TV_Movie_value</item>
+        <item>@string/settings_Thriller_value</item>
+        <item>@string/settings_War_value</item>
+        <item>@string/settings_Western_value</item>
     </string-array>
 </resources>

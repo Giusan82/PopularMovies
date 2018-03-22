@@ -10,24 +10,38 @@
 
     <string name="number_results">Results: %1$d</string>
     <string name="number_pages">%1$d / %2$d</string>
+    <string name="unknown">Unknown</string>
+
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="close_button">Close</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="refresh_button">Refresh</string>
+
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="no_internet">Check your connection or try again.</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="no_internet_title">No Internet Connection!</string>
 
     <!--Strings for DetailsActivity-->
     <string name="original_title"><![CDATA[<b>Original Title:</b>]]> %1$s</string>
     <string name="description"><![CDATA[<b>Description:</b><br/>]]> %1$s</string>
-    <string name="release_date"><![CDATA[<b>Released:</b>]]> %1$s</string>
+
     <string name="genres"><![CDATA[<b>Genre:</b>]]> %1$s</string>
+    <string name="production_companies"><![CDATA[<b>Production Companies:</b>]]> %1$s</string>
+    <string name="production_countries"><![CDATA[<b>Production Countries:</b>]]> %1$s</string>
+    <string name="runtime"><![CDATA[<b>Duration:</b>]]> %1$d min</string>
+    <string name="spoken_languages"><![CDATA[<b>Languages:</b>]]> %1$s</string>
+    <string name="status"><![CDATA[<b>Status:</b>]]> %1$s</string>
+    <string name="seasons_and_episodes"><![CDATA[<b>Seasons:</b>]]> %1$d | <![CDATA[<b>Episodes:</b>]]> %2$d</string>
 
 
     <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
     <string name="search_movies">Movies</string>
+    <string name="search_movies_value" translatable="false">movie</string>
     <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
     <string name="search_tv">TV Shows</string>
-    <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
-    <string name="search_person">People</string>
-    <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
-    <string name="search_multi">Multi</string>
-    <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
-    <string name="search_keywords">Keywords</string>
+    <string name="search_tv_value" translatable="false">tv</string>
+
 
     <!--Category settings [CHAR LIMIT=NONE]-->
     <string name="category_general">General</string>
@@ -103,8 +117,10 @@
     <string name="settings_Western_value" translatable="false">37</string>
 
     <!--Switch buttons  [CHAR LIMIT=NONE]-->
-    <string name="settings_adult_content_label">Filter Adult Content</string>
+    <string name="settings_adult_content_label">Include Adult Content</string>
     <string name="settings_adult_content_key" translatable="false">include_adult</string>
+    <string name="settings_include_video_label">Include Video</string>
+    <string name="settings_include_video_key" translatable="false">include_video</string>
     <string name="checkbox_summary_on">On</string>
     <string name="checkbox_summary_off">Off</string>
 

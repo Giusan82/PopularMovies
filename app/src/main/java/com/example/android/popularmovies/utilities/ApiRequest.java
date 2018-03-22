@@ -23,6 +23,12 @@ public class ApiRequest {
     public static List<MoviesList> fetchData(Context context, String stringUrl) {
         // Create URL object
         URL url = null;
+        //TODO remove this when finished
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         try {
             url = new URL(stringUrl);
         } catch (MalformedURLException e) {

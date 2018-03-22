@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.popularmovies.utilities.MoviesList;
+import com.example.android.popularmovies.utilities.SharedData;
 
 import java.util.ArrayList;
 
@@ -41,8 +42,6 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
         if(!current.getPoster_Path().equals("null")){
             String imageUrl = IMAGE_BASE_URL + current.getPoster_Path();
             Glide.with(mContext).load(imageUrl).crossFade().dontTransform().into(holder.iv_poster);
-        }else{
-            holder.iv_poster.setImageResource(R.drawable.placeholder);
         }
 
         holder.tv_title.setText(current.getTitle());
@@ -76,7 +75,8 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
                 int position = getAdapterPosition();
                 MoviesList current = mMoviesList.get(position);
                 Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra(DetailsActivity.EXTRA_MOVIE, current);
+                intent.putExtra(DetailsActivity.EXTRA_MOVIE_ID, current.getID());
+                intent.putExtra(DetailsActivity.EXTRA_MOVIE_TITLE, current.getTitle());
                 mContext.startActivity(intent);
             }
         };
