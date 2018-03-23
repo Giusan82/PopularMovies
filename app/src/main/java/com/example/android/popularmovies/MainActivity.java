@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private int mPage = 1;
     private int mTotal_page;
     private ProgressBar mLoading_list;
+    private ImageView mIV_empty_list;
+    private TextView mTV_empty_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mNext_page_iv = findViewById(R.id.iv_navigate_next);
         searchValue = getResources().getStringArray(R.array.search_type_value);
         mLoading_list = findViewById(R.id.loading_list);
+        mIV_empty_list = findViewById(R.id.iv_empty);
+        mTV_empty_list = findViewById(R.id.tv_empty);
 
         mPrevius_page_iv.setOnClickListener(previousPage);
         mNext_page_iv.setOnClickListener(nextPage);
@@ -140,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<MoviesList>> onCreateLoader(int i, Bundle bundle) {
+        mIV_empty_list.setVisibility(View.GONE);
+        mTV_empty_list.setVisibility(View.GONE);
         return new DataLoader(this, builderUrl(query).toString());
     }
 
@@ -159,6 +165,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 //and notify to adapter to update the data
                 adapter.notifyDataSetChanged();
                 mLoading_list.setVisibility(View.GONE);
+            }else{
+                clear();
+                mIV_empty_list.setVisibility(View.VISIBLE);
+                mTV_empty_list.setVisibility(View.VISIBLE);
             }
         }else {
             mLoading_list.setVisibility(View.GONE);

@@ -21,6 +21,8 @@
     <string name="no_internet">Check your connection or try again.</string>
     <!-- [CHAR LIMIT=NONE] -->
     <string name="no_internet_title">No Internet Connection!</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="no_found_message"><b>No Movie or TV show found</b>\nPlease try again with a different research.</string>
 
     <!--Strings for DetailsActivity-->
     <string name="original_title"><![CDATA[<b>Original Title:</b>]]> %1$s</string>
@@ -45,7 +47,7 @@
 
     <!--Category settings [CHAR LIMIT=NONE]-->
     <string name="category_general">General</string>
-    <string name="category_filter">Filter</string>
+    <string name="category_filter">Search Filters</string>
 
     <!-- Strings For Order By Preference [CHAR LIMIT=NONE] -->
     <string name="settings_orderBy_label">Order By</string>
