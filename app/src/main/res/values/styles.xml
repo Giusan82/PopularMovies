@@ -16,7 +16,8 @@
         <item name="android:windowBackground">@drawable/gradient_light_grey</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="colorTextAttr">@color/colorText</item>
-        <item name="colorDialogBackgroundAttr">@color/middle_gray</item>
+        <item name="colorDialogBackgroundAttr">@color/darkGrey</item>
+        <item name="alertDialogTheme">@style/alertDialog</item>
     </style>
 
     <style name="Spinner_style" parent="@style/Base.Animation.AppCompat.DropDownUp">
@@ -33,18 +34,20 @@
 
     <!-- Setting activity theme-->
     <style name="setting_activity" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="colorPrimary">@color/darkGrey</item>
         <item name="android:windowBackground">@color/middle_gray</item>
         <item name="android:textColorPrimary">@color/colorText</item>
         <item name="android:textColorSecondary">@color/colorText</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorDialogBackgroundAttr">@color/middle_gray</item>
+        <item name="alertDialogTheme">@style/alertDialog</item>
     </style>
 
-    <style name="alertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-        <item name="android:textColorPrimary">@color/colorText</item>
-        <item name="android:textColor">@color/colorText</item>
-        <item name="colorAccent">@color/colorText</item>
+    <style name="alertDialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:dividerHeight">@dimen/divider</item>
+        <item name="android:divider">?attr/divider_attr</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:background">?attr/colorDialogBackgroundAttr</item>
     </style>
 </resources>

@@ -18,7 +18,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,9 +42,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int LOADER_ID = 0;
 
     private static final String SERVER_URL = "https://api.themoviedb.org/3/";
-    private static final String MOVIE_PATH = "movie";
     private static final String DISCOVER_PATH = "discover";
-    private static final String POPULAR_PATH = "popular";
     private static final String SEARCH_PATH = "search";
     private final static String QUERY_PARAM = "query";
     private final static String WITH_GENRE_PARAM = "with_genres";
@@ -63,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private LoaderManager loaderManager;
     private TextView mPages_tv;
     private TextView mResults_tv;
-    private MoviesList movies;
     private String query;
     private ImageView mPrevius_page_iv;
     private ImageView mNext_page_iv;
@@ -231,11 +227,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             String selection = (String) adapterView.getItemAtPosition(i);
             if(!TextUtils.isEmpty(selection)){
                 if(selection.equals(getString(R.string.search_movies))){
-                    Log.e("selection", selection);
                     SharedData.setSearchType(getApplicationContext(), i);
                 }
                 if(selection.equals(getString(R.string.search_tv))){
-                    Log.e("selection", selection);
                     SharedData.setSearchType(getApplicationContext(), i);
                 }
             }
@@ -274,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     .appendQueryParameter(SORT_BY_PARAM, orderBy)
                     .appendQueryParameter(WITH_GENRE_PARAM, genre);
         }else{
-            Log.e("Query", query);
             builtUri.appendPath(SEARCH_PATH)
                     .appendPath(type)
                     .appendQueryParameter(QUERY_PARAM, query);
@@ -291,7 +284,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.e("Url", url.toString());
         return url;
     }
 
@@ -342,10 +334,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     //build an alert dialog message for no internet connection
     public void alertDialogMessage(String title, String message) {
-        int style = R.style.alertDialog;
         int icon = R.drawable.ic_portable_wifi_off;
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setIcon(icon);
         builder.setMessage(message);
