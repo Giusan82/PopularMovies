@@ -18,6 +18,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 mLoading_list.setVisibility(View.GONE);
             }else{
                 clear();
+                mLoading_list.setVisibility(View.GONE);
                 mIV_empty_list.setVisibility(View.VISIBLE);
                 mTV_empty_list.setVisibility(View.VISIBLE);
             }
@@ -281,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         URL url = null;
         try {
             url = new URL(builtUri.toString());
+            Log.e("Main", url.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

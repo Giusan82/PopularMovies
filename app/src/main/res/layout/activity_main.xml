@@ -36,24 +36,24 @@
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:src="@drawable/movie"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_found_message"
         android:gravity="center_horizontal"
+        android:text="@string/no_found_message"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_empty"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/iv_empty" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/footer"
@@ -109,6 +109,4 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_navigate_next" />
     </android.support.constraint.ConstraintLayout>
-
-
 </android.support.constraint.ConstraintLayout>

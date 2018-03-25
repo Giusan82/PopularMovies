@@ -56,6 +56,7 @@ public class JsonParser {
     private static final String KEY_STATUS = "status";
     private static final String KEY_SEASONS = "number_of_seasons";
     private static final String KEY_EPISODES = "number_of_episodes";
+    private static final String KEY_SERVER_STATUS_MESSAGE = "status_message";
 
     /**
      * Return a list of {@link MoviesList} objects that has been built up from parsing a JSON response.
@@ -72,6 +73,7 @@ public class JsonParser {
             int page = base.optInt(KEY_PAGE);
             int total_results = base.optInt(KEY_TOTAL_RESULT);
             int total_pages = base.optInt(KEY_TOTAL_PAGES);
+            String status_message = base.optString(KEY_SERVER_STATUS_MESSAGE);
 
             if(base.has(KEY_RESULTS)){
                 JSONArray results = base.optJSONArray(KEY_RESULTS);
@@ -100,6 +102,7 @@ public class JsonParser {
                             page,
                             total_pages,
                             total_results,
+                            status_message,
                             id,
                             title,
                             original_title,
@@ -199,6 +202,7 @@ public class JsonParser {
                         page,
                         total_pages,
                         total_results,
+                        status_message,
                         id,
                         title,
                         original_title,
@@ -222,17 +226,8 @@ public class JsonParser {
                         episodes);
                 list.add(movies);
             }
-
-            //source: https://www.java2novice.com/java-collections-and-util/collections/max-element-comparator/
-//            MoviesList max_popularity = Collections.max(list, new Comparator<MoviesList>() {
-//                @Override
-//                public int compare(MoviesList arg1, MoviesList arg2) {
-//                    return Double.compare(arg1.getPopularity(), arg2.getPopularity());
-//                }
-//            });
-//            Log.e("JsonParser", "MaxPopolarity: " + max_popularity.getPopularity());
         } catch (JSONException e) {
-            Log.e(LOG_TAG + " -> JSONException", "Problem with parsing JSON");
+            Log.e(LOG_TAG + " -> JSONException", "Problem with parsing JSON, message: " + e);
         }
         return list;
     }

@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.popularmovies.utilities.DataLoader;
+import com.example.android.popularmovies.utilities.JsonParser;
 import com.example.android.popularmovies.utilities.MoviesList;
 import com.example.android.popularmovies.utilities.SharedData;
 
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesList>> {
+    private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_MOVIE_ID = "extra_movie_id";
     public static final String EXTRA_MOVIE_TITLE = "extra_movie_title";
@@ -70,8 +72,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private TextView mStatus;
     private ImageView mHeader;
     private ImageView mPoster;
-    private MoviesList mMovie;
     private RatingBar mRatingBar;
+    private ImageView mEmpty_Image;
+    private TextView mEmpty_message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +97,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         mPoster = findViewById(R.id.iv_poster);
 
         mRatingBar = findViewById(R.id.ratingBar);
+
+        mEmpty_Image = findViewById(R.id.iv_empty);
+        mEmpty_message = findViewById(R.id.tv_empty);
 
         searchValue = getResources().getStringArray(R.array.search_type_value);
 
@@ -175,6 +181,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 mStatus.setText(Html.fromHtml(getString(R.string.status, mItems.get(0).getStatus())));
                 mLoading_activity.setVisibility(View.GONE);
                 cl_content.setVisibility(View.VISIBLE);
+                Log.e(LOG_TAG, "Status Message: " + mItems.get(0).getStatus_Message());
+            }else{
+                mLoading_activity.setVisibility(View.GONE);
+                mEmpty_Image.setVisibility(View.VISIBLE);
+                mEmpty_message.setVisibility(View.VISIBLE);
             }
         }else{
             mLoading_activity.setVisibility(View.GONE);

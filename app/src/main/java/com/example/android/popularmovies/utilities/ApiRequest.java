@@ -77,10 +77,10 @@ public class ApiRequest {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = streamReader(inputStream);
             } else {
-                Log.e(LOG_TAG + " -> makeHttpRequest", "Server Response: " + urlConnection.getResponseCode() + " " + urlConnection.getResponseMessage());
+                Log.e(LOG_TAG + " -> httpRequest", "Server Response: " + urlConnection.getResponseCode() + " " + urlConnection.getResponseMessage());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG + " -> IOException", "makeHttpRequest: " + e.toString());
+            Log.e(LOG_TAG + " -> IOException", "httpRequest: " + e.toString());
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();

@@ -23,6 +23,7 @@ public class MoviesList implements Serializable {
     private int mPage; //Page
     private int mTotal_Page;
     private int mTotal_results;
+    private String mStatus_Message;
     private int mID;
     private String mTitle; //this is a title of picture
     private String mOriginal_title;
@@ -53,6 +54,7 @@ public class MoviesList implements Serializable {
                       int page,
                       int total_page,
                       int total_results,
+                      String status_message,
                       int id,
                       String title,
                       String original_title,
@@ -70,6 +72,7 @@ public class MoviesList implements Serializable {
         this.mPage = page;
         this.mTotal_Page = total_page;
         this.mTotal_results = total_results;
+        this.mStatus_Message = status_message;
         this.mID = id;
         this.mTitle = title;
         this.mOriginal_title = original_title;
@@ -89,6 +92,7 @@ public class MoviesList implements Serializable {
                       int page,
                       int total_page,
                       int total_results,
+                      String status_message,
                       int id,
                       String title,
                       String original_title,
@@ -114,6 +118,7 @@ public class MoviesList implements Serializable {
         this.mPage = page;
         this.mTotal_Page = total_page;
         this.mTotal_results = total_results;
+        this.mStatus_Message = status_message;
         this.mID = id;
         this.mTitle = title;
         this.mOriginal_title = original_title;
@@ -145,6 +150,8 @@ public class MoviesList implements Serializable {
     public int getTotal_Page(){return mTotal_Page;}
 
     public int getTotal_results(){return mTotal_results;}
+
+    public String getStatus_Message(){return mStatus_Message;}
 
     public int getID() {
         return mID;

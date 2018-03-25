@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/category_filter">
         <ListPreference
             android:defaultValue="@string/settings_orderBy_default"
             android:entries="@array/order_by_labels"
             android:entryValues="@array/order_by_values"
             android:key="@string/settings_orderBy_key"
-            android:title="@string/settings_orderBy_label"/>
+            android:title="@string/settings_orderBy_label" />
         <ListPreference
             android:defaultValue="@string/settings_genre_ids_default"
             android:entries="@array/genre_ids_labels"

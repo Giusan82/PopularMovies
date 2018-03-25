@@ -9,10 +9,11 @@
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|always" />
-    <item android:id="@+id/sp_search_type"
+    <item
+        android:id="@+id/sp_search_type"
         android:title="Search Type"
         app:actionViewClass="android.widget.Spinner"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings_24dp"

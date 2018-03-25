@@ -23,6 +23,7 @@
     <string name="no_internet_title">No Internet Connection!</string>
     <!-- [CHAR LIMIT=NONE] -->
     <string name="no_found_message"><b>No Movie or TV show found</b>\nPlease try again with a different research.</string>
+    <string name="detail_no_found_message">The resource you requested could not be found.</string>
 
     <!--Strings for DetailsActivity-->
     <string name="original_title"><![CDATA[<b>Original Title:</b>]]> %1$s</string>
