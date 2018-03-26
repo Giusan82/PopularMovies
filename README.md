@@ -7,8 +7,7 @@
 and also includes: </p>
 <ul>
 <li>A searcView on the actionBar with the instant search.</li>
-<li>An advanced search to filter the results with Order By, Max Results and so 
-on.</li>
+<li>An advanced search to filter the results.</li>
 <li>The image are displayed using the Image Loader Library <a href="https://github.com/bumptech/glide">Glide</a>, which it handles image loading/caching.</li>
 
 </ul>
