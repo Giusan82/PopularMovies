@@ -1,23 +1,23 @@
 # PopularMovies
 
-<p>App created for Udacity.com in the course: Google Challenge Scholarship: Android Developer
+<p>App created for Udacity.com in the course: Google Challenge Scholarship: Android Developer Nanodegree Program
 <br>
 <i>Skill level</i>: <b>intermediate</b></p>
-<p>After I have completed the lesson 07.23 "Preference Summary", I thought to build an app just for practicing what I learned so far.</p>
-<p>This app implements a recyclerView and viewHolder of a list of pictures fetched via an HTTP request from <a href="https://unsplash.com/" rel="nofollow">Unsplash.com</a> 
+<p>This app implements a recyclerView and viewHolder of a list of pictures fetched via an HTTP request from <a href="https://www.themoviedb.org/" rel="nofollow">themoviedb.org</a> 
 and also includes: </p>
 <ul>
-<li>A searcView on the actionBar, in which the instant search is deactivated, because the free API Key included into the <a href="photogallery.apk">apk</a> 
-allows only 50 requests per hour.</li>
+<li>A searcView on the actionBar with the instant search.</li>
 <li>An advanced search to filter the results with Order By, Max Results and so 
 on.</li>
-<li>Two switchable themes in settings.</li>
 <li>The image are displayed using the Image Loader Library <a href="https://github.com/bumptech/glide">Glide</a>, which it handles image loading/caching.</li>
-<li>A downloading function, that allows to save the image to your device.</li>
-	<li>A full screen activity, which uses the library <a href="https://github.com/chrisbanes/PhotoView">PhotoView</a> that implements a zooming Android ImageView.</li>
+
 </ul>
-<p>The API Key is not included in the project but only into the apk file, just 
-for allowing to try it.</p>
+<p>The API Key is not included in the project. If you wish try this app, just create a values/secrets.xml file in your resources and add the following lines:</p>
+<pre>
+<resources>
+    <string name="api_key">your_api_key</string>
+</resources>
+</pre>
 <p>Here some screenshots:</p>
 <p align="center">
   <img src="2018-01-16_02.28.01.151.png" height="450" style="max-width:100%;">
