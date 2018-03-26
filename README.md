@@ -18,6 +18,11 @@ on.</li>
     <string name="api_key">your_api_key</string>
 </resources>
 </code>
+```xml
+<myxml>
+   <someElement />  
+</myxml>
+```
 <p>Here some screenshots:</p>
 <p align="center">
   <img src="2018-01-16_02.28.01.151.png" height="450" style="max-width:100%;">
