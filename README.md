@@ -21,7 +21,7 @@ on.</li>
 
 <p>Here some screenshots:</p>
 <p align="center">
-  <img src="2018-03-26_160615.jpg" height="450" style="max-width:100%;">
-  <img src="2018-03-26_144938.jpg" height="450" style="max-width:100%;">
+  <img src="2018-03-26_160615.jpg" height="500" style="max-width:100%;">
+  <img src="2018-03-26_144938.jpg" height="500" style="max-width:100%;">
 </p>
 
