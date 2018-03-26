@@ -50,9 +50,8 @@
         <RatingBar
             android:id="@+id/ratingBar"
             style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/rating_bar_width"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_title"
             android:numStars="5"
@@ -67,7 +66,6 @@
             android:id="@+id/tv_vote_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/tv_title"
             android:layout_toEndOf="@+id/ratingBar"

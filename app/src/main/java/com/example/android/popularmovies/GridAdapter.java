@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +46,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
             Glide.with(mContext).load(imageUrl).crossFade().dontTransform().into(holder.iv_poster);
         }
         holder.tv_title.setText(current.getTitle());
+        holder.rb_vote_average.setRating((float) current.getVote_Average() * 5 / 10);
         holder.tv_vote_average.setText(String.valueOf(current.getVote_Average()));
         //here the views are not recycled. It avoids to see the previous image on the next view during the loading.
         holder.setIsRecyclable(false);
@@ -58,6 +60,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
     public class GridViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv_poster;
         public TextView tv_title;
+        public RatingBar rb_vote_average;
         public TextView tv_vote_average;
         public View list_container;
 
@@ -65,6 +68,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
             super(itemView);
             this.iv_poster = itemView.findViewById(R.id.iv_poster);
             this.tv_title = itemView.findViewById(R.id.tv_title);
+            this.rb_vote_average = itemView.findViewById(R.id.ratingBar);
             this.tv_vote_average = itemView.findViewById(R.id.tv_vote_average);
             this.list_container = itemView.findViewById(R.id.list_container);
             list_container.setOnClickListener(mViewListener);
