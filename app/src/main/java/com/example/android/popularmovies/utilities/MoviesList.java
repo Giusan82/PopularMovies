@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.android.popularmovies.R;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MoviesList implements Serializable {
+public class MoviesList{
     public static final String LOG_TAG = MoviesList.class.getName();
     private static final String SEPARATOR_LIST = ", ";
     private static final String END_LIST = ".";
