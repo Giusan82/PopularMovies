@@ -11,15 +11,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.popularmovies.utilities.MoviesList;
-import com.example.android.popularmovies.utilities.SharedData;
 
 import java.util.ArrayList;
 
 
-public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder>{
+public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder> {
     private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
+    private static final String NULL_VALUE = "null";
     private Context mContext;
     private ArrayList<MoviesList> mMoviesList;
+
     /**
      * Constructor
      */
@@ -39,11 +40,10 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
     @Override
     public void onBindViewHolder(GridViewHolder holder, int position) {
         final MoviesList current = mMoviesList.get(position);
-        if(!current.getPoster_Path().equals("null")){
+        if (!current.getPoster_Path().equals(NULL_VALUE)) {
             String imageUrl = IMAGE_BASE_URL + current.getPoster_Path();
             Glide.with(mContext).load(imageUrl).crossFade().dontTransform().into(holder.iv_poster);
         }
-
         holder.tv_title.setText(current.getTitle());
         holder.tv_vote_average.setText(String.valueOf(current.getVote_Average()));
         //here the views are not recycled. It avoids to see the previous image on the next view during the loading.
@@ -55,7 +55,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
         return mMoviesList.size();
     }
 
-    public class GridViewHolder extends RecyclerView.ViewHolder{
+    public class GridViewHolder extends RecyclerView.ViewHolder {
         public ImageView iv_poster;
         public TextView tv_title;
         public TextView tv_vote_average;
@@ -69,11 +69,13 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
             this.list_container = itemView.findViewById(R.id.list_container);
             list_container.setOnClickListener(mViewListener);
         }
+
         private View.OnClickListener mViewListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int position = getAdapterPosition();
                 MoviesList current = mMoviesList.get(position);
+                //this open the DetailActivity
                 Intent intent = new Intent(mContext, DetailsActivity.class);
                 intent.putExtra(DetailsActivity.EXTRA_MOVIE_ID, current.getID());
                 intent.putExtra(DetailsActivity.EXTRA_MOVIE_TITLE, current.getTitle());

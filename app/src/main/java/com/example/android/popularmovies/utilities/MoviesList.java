@@ -1,6 +1,5 @@
 package com.example.android.popularmovies.utilities;
 
-
 import android.content.Context;
 import android.util.Log;
 
@@ -18,12 +17,10 @@ public class MoviesList implements Serializable {
     public static final String LOG_TAG = MoviesList.class.getName();
     private static final String SEPARATOR_LIST = ", ";
     private static final String END_LIST = ".";
-
     private Context mContext;
     private int mPage; //Page
     private int mTotal_Page;
     private int mTotal_results;
-    private String mStatus_Message;
     private int mID;
     private String mTitle; //this is a title of picture
     private String mOriginal_title;
@@ -49,50 +46,31 @@ public class MoviesList implements Serializable {
     /**
      * Constructor
      */
-    public MoviesList(){}
-    public MoviesList(Context context,
-                      int page,
-                      int total_page,
-                      int total_results,
-                      String status_message,
-                      int id,
-                      String title,
-                      String original_title,
-                      String original_language,
-                      String description,
-                      String poster_path,
-                      String background_path,
-                      int vote_count,
-                      double vote_average,
-                      double popularity,
-                      String release_date,
-                      boolean hasVideo,
-                      boolean isAdult)
-    {   this.mContext = context;
-        this.mPage = page;
-        this.mTotal_Page = total_page;
-        this.mTotal_results = total_results;
-        this.mStatus_Message = status_message;
-        this.mID = id;
-        this.mTitle = title;
-        this.mOriginal_title = original_title;
-        this.mOriginal_language = original_language;
-        this.mDescription = description;
-        this.mPoster_Path = poster_path;
-        this.mBackground_Path = background_path;
-        this.mVote_Count = vote_count;
-        this.mVote_Average = vote_average;
-        this.mPopularity = popularity;
-        this.mRelease_date = release_date;
-        this.mHasVideo = hasVideo;
-        this.mIsAdult = isAdult;
+    public MoviesList() {
     }
 
     public MoviesList(Context context,
                       int page,
                       int total_page,
                       int total_results,
-                      String status_message,
+                      int id,
+                      String title,
+                      String poster_path,
+                      double vote_average) {
+        this.mContext = context;
+        this.mPage = page;
+        this.mTotal_Page = total_page;
+        this.mTotal_results = total_results;
+        this.mID = id;
+        this.mTitle = title;
+        this.mPoster_Path = poster_path;
+        this.mVote_Average = vote_average;
+    }
+
+    public MoviesList(Context context,
+                      int page,
+                      int total_page,
+                      int total_results,
                       int id,
                       String title,
                       String original_title,
@@ -113,12 +91,11 @@ public class MoviesList implements Serializable {
                       ArrayList<String> spoken_languages,
                       String status,
                       int seasons,
-                      int episodes)
-    {   this.mContext = context;
+                      int episodes) {
+        this.mContext = context;
         this.mPage = page;
         this.mTotal_Page = total_page;
         this.mTotal_results = total_results;
-        this.mStatus_Message = status_message;
         this.mID = id;
         this.mTitle = title;
         this.mOriginal_title = original_title;
@@ -145,13 +122,17 @@ public class MoviesList implements Serializable {
     /**
      * Getter
      **/
-    public int getPage(){return mPage;}
+    public int getPage() {
+        return mPage;
+    }
 
-    public int getTotal_Page(){return mTotal_Page;}
+    public int getTotal_Page() {
+        return mTotal_Page;
+    }
 
-    public int getTotal_results(){return mTotal_results;}
-
-    public String getStatus_Message(){return mStatus_Message;}
+    public int getTotal_results() {
+        return mTotal_results;
+    }
 
     public int getID() {
         return mID;
@@ -189,7 +170,7 @@ public class MoviesList implements Serializable {
         return formatList(mProduction_Companies);
     }
 
-    public String getProductionCountries(){
+    public String getProductionCountries() {
         return formatList(mProduction_Countries);
     }
 
@@ -197,31 +178,43 @@ public class MoviesList implements Serializable {
         return mVote_Count;
     }
 
-    public double getVote_Average(){return mVote_Average;}
+    public double getVote_Average() {
+        return mVote_Average;
+    }
 
-    public double getPopularity(){return mPopularity;}
+    public double getPopularity() {
+        return mPopularity;
+    }
 
-    public String getRelease_date(){return formatDate(mRelease_date);}
+    public String getRelease_date() {
+        return formatDate(mRelease_date);
+    }
 
-    public boolean getHasVideo(){return mHasVideo;}
+    public boolean getHasVideo() {
+        return mHasVideo;
+    }
 
-    public boolean getIsAdult(){return mIsAdult;}
+    public boolean getIsAdult() {
+        return mIsAdult;
+    }
 
-    public int getRuntime(){return mRuntime;}
+    public int getRuntime() {
+        return mRuntime;
+    }
 
-    public String getSpokenLanguages(){
+    public String getSpokenLanguages() {
         return formatList(mSpoken_Languages);
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return mStatus;
     }
 
-    public int getNumberOfSeasons(){
+    public int getNumberOfSeasons() {
         return mNumberOfSeasons;
     }
 
-    public int getNumberOfEpisodes(){
+    public int getNumberOfEpisodes() {
         return mNumberOfEpisodes;
     }
 
@@ -244,7 +237,7 @@ public class MoviesList implements Serializable {
     }
 
     private String formatList(List<String> list) {
-        if(list.size() != 0){
+        if (list.size() != 0) {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < list.size(); i++) {
                 builder.append(list.get(i));
@@ -253,7 +246,7 @@ public class MoviesList implements Serializable {
             String final_string = builder.toString();
             final_string = final_string.substring(0, final_string.lastIndexOf(SEPARATOR_LIST)) + END_LIST;
             return final_string;
-        }else{
+        } else {
             return mContext.getString(R.string.unknown);
         }
     }

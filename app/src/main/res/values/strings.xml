@@ -37,14 +37,12 @@
     <string name="status"><![CDATA[<b>Status:</b>]]> %1$s</string>
     <string name="seasons_and_episodes"><![CDATA[<b>Seasons:</b>]]> %1$d | <![CDATA[<b>Episodes:</b>]]> %2$d</string>
 
-
     <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
     <string name="search_movies">Movies</string>
     <string name="search_movies_value" translatable="false">movie</string>
     <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
     <string name="search_tv">TV Shows</string>
     <string name="search_tv_value" translatable="false">tv</string>
-
 
     <!--Category settings [CHAR LIMIT=NONE]-->
     <string name="category_general">General</string>
@@ -71,7 +69,6 @@
     <string name="orderBy_newest_value" translatable="false">release_date.desc</string>
     <string name="orderBy_oldest_label">Oldest</string>
     <string name="orderBy_oldest_value" translatable="false">release_date.asc</string>
-
 
     <!-- Strings For Genre Ids Preference [CHAR LIMIT=NONE] -->
     <string name="settings_genre_ids_label">Genre</string>
@@ -126,6 +123,4 @@
     <string name="settings_include_video_key" translatable="false">include_video</string>
     <string name="checkbox_summary_on">On</string>
     <string name="checkbox_summary_off">Off</string>
-
-
 </resources>

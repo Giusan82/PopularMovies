@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.popularmovies.utilities.DataLoader;
-import com.example.android.popularmovies.utilities.JsonParser;
 import com.example.android.popularmovies.utilities.MoviesList;
 import com.example.android.popularmovies.utilities.SharedData;
 
@@ -32,24 +30,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesList>> {
-    private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
-    public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_MOVIE_ID = "extra_movie_id";
     public static final String EXTRA_MOVIE_TITLE = "extra_movie_title";
-    public static final String EXTRA_MEDIA_TYPE = "extra_media_type";
     public static final int DEFAULT_ID = 0;
     private static final String IMAGE_BASE_HEADER = "http://image.tmdb.org/t/p/original/";
     private static final String IMAGE_BASE_POSTER = "http://image.tmdb.org/t/p/w342/";
     private static final String NULL_VALUE = "null";
-
-
-    private static final String POPULARITY_FORMAT = "%.1f";
-
-    private static final int LOADER_ID = 1;
+    private static final String POPULARITY_FORMAT = "%.1f";//this display the popularity value with only one decimal
+    private static final int LOADER_ID = 1; //loader id of this activity
     private static final String SERVER_URL = "https://api.themoviedb.org/3/";
     private final static String API_KEY = "api_key"; //this is the api key of themoviedb.org
-    private static final String MOVIE_PATH = "movie";
-
     private int mId;
     private String mTitle;
     private LoaderManager loaderManager;
@@ -57,7 +47,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private String[] searchValue;
     private ProgressBar mLoading_header;
     private ProgressBar mLoading_activity;
-
     private ConstraintLayout cl_content;
     private TextView mOriginalTitle;
     private TextView mDescription;
@@ -80,6 +69,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        //Find the id for the respective views
         cl_content = findViewById(R.id.cl_content);
         mOriginalTitle = findViewById(R.id.tv_original_title);
         mDescription = findViewById(R.id.tv_description);
@@ -91,29 +81,22 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         mRuntime = findViewById(R.id.tv_runtime);
         mLanguages = findViewById(R.id.tv_spoken_languages);
         mStatus = findViewById(R.id.tv_status);
-
         mGenres = findViewById(R.id.tv_genres);
         mHeader = findViewById(R.id.iv_header);
         mPoster = findViewById(R.id.iv_poster);
-
         mRatingBar = findViewById(R.id.ratingBar);
-
         mEmpty_Image = findViewById(R.id.iv_empty);
         mEmpty_message = findViewById(R.id.tv_empty);
-
-        searchValue = getResources().getStringArray(R.array.search_type_value);
-
         mLoading_header = findViewById(R.id.loading_header);
         mLoading_activity = findViewById(R.id.loading_activity);
+        //this get the array from resources
+        searchValue = getResources().getStringArray(R.array.search_type_value);
 
         Intent intent = getIntent();
-        if(intent.hasExtra(EXTRA_MOVIE_ID)){
-            //this receive a custom object, source: https://stackoverflow.com/a/7827593
-            //mMovie = (MoviesList)intent.getSerializableExtra(EXTRA_MOVIE);
+        if (intent.hasExtra(EXTRA_MOVIE_ID)) {
             mId = intent.getIntExtra(EXTRA_MOVIE_ID, DEFAULT_ID);
-            Log.e("Detail", "Intent ID: " + mId);
         }
-        if(intent.hasExtra(EXTRA_MOVIE_TITLE)){
+        if (intent.hasExtra(EXTRA_MOVIE_TITLE)) {
             mTitle = intent.getStringExtra(EXTRA_MOVIE_TITLE);
             setTitle(mTitle);
         }
@@ -121,12 +104,13 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         loaderManager = getLoaderManager();
         if (isConnected()) {
             loaderManager.initLoader(LOADER_ID, null, this);
-        }else{
+        } else {
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
             alertDialogMessage(title, message);
         }
         //the ArrayList is initialized
+        //for simplicity the json parsing of movies detail are added in a single row of an ArrayList, using in that way, the same way used for the movies list
         mItems = new ArrayList<>();
     }
 
@@ -143,57 +127,53 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 //if not, add all items into the ArrayList
                 mItems.addAll(data);
                 String header = mItems.get(0).getBackground_Path();
-                if (!header.equals(NULL_VALUE)){
+                if (!header.equals(NULL_VALUE)) {
                     Glide.with(this).load(IMAGE_BASE_HEADER + header).crossFade().dontTransform().into(mHeader);
-                }else{
+                } else {
                     mHeader.setVisibility(View.GONE);
                     mLoading_header.setVisibility(View.GONE);
                 }
                 String poster = mItems.get(0).getPoster_Path();
-                if (!poster.equals(NULL_VALUE)){
+                if (!poster.equals(NULL_VALUE)) {
                     Glide.with(this).load(IMAGE_BASE_POSTER + poster).crossFade().dontTransform().into(mPoster);
-                }else{
+                } else {
                     mPoster.setImageResource(R.drawable.placeholder_poster);
                 }
                 mOriginalTitle.setText(Html.fromHtml(getString(R.string.original_title, mItems.get(0).getOriginal_title())));
                 mPopularity.setText(String.format(POPULARITY_FORMAT, mItems.get(0).getPopularity()));
                 mDescription.setVisibility(View.VISIBLE);
-                if(!mItems.get(0).getDescription().isEmpty()){
+                if (!mItems.get(0).getDescription().isEmpty()) {
                     mDescription.setText(Html.fromHtml(getString(R.string.description, mItems.get(0).getDescription())));
-                }else{
+                } else {
                     mDescription.setText(Html.fromHtml(getString(R.string.description, getString(R.string.unknown))));
                 }
-
                 mRelease_Date.setText(mItems.get(0).getRelease_date());
                 mRatingValue.setText(String.valueOf(mItems.get(0).getVote_Average()));
-                mRatingBar.setRating((float)mItems.get(0).getVote_Average()*5/10);
+                mRatingBar.setRating((float) mItems.get(0).getVote_Average() * 5 / 10);
                 mGenres.setText(Html.fromHtml(getString(R.string.genres, mItems.get(0).getGenres())));
                 mCompanies.setText(Html.fromHtml(getString(R.string.production_companies, mItems.get(0).getProductionCompanies())));
                 mCountries.setText(Html.fromHtml(getString(R.string.production_countries, mItems.get(0).getProductionCountries())));
                 String mediaSelection = searchValue[SharedData.getSearchType(this)];
-                if(mediaSelection.equals(getString(R.string.search_movies_value))){
+                if (mediaSelection.equals(getString(R.string.search_movies_value))) {
                     mRuntime.setText(Html.fromHtml(getString(R.string.runtime, mItems.get(0).getRuntime())));
-                }else{
+                } else {
                     mRuntime.setText(Html.fromHtml(getString(R.string.seasons_and_episodes, mItems.get(0).getNumberOfSeasons(), mItems.get(0).getNumberOfEpisodes())));
                 }
-
                 mLanguages.setText(Html.fromHtml(getString(R.string.spoken_languages, mItems.get(0).getSpokenLanguages())));
                 mStatus.setText(Html.fromHtml(getString(R.string.status, mItems.get(0).getStatus())));
                 mLoading_activity.setVisibility(View.GONE);
                 cl_content.setVisibility(View.VISIBLE);
-                Log.e(LOG_TAG, "Status Message: " + mItems.get(0).getStatus_Message());
-            }else{
+            } else {
                 mLoading_activity.setVisibility(View.GONE);
                 mEmpty_Image.setVisibility(View.VISIBLE);
                 mEmpty_message.setVisibility(View.VISIBLE);
             }
-        }else{
+        } else {
             mLoading_activity.setVisibility(View.GONE);
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
             alertDialogMessage(title, message);
         }
-
     }
 
     @Override
@@ -207,7 +187,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     //this builds the url
     private URL builderUrl(int id) {
-
         String type = searchValue[SharedData.getSearchType(this)];
         Uri.Builder builtUri;
         builtUri = Uri.parse(SERVER_URL).buildUpon();
@@ -215,14 +194,12 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 .appendPath(String.valueOf(id))
                 .appendQueryParameter(API_KEY, getString(R.string.api_key))
                 .build();
-
         URL url = null;
         try {
             url = new URL(builtUri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.e("DetailUrl", url.toString());
         return url;
     }
 
@@ -233,10 +210,8 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     //build an alert dialog message for no internet connection
     public void alertDialogMessage(String title, String message) {
-        int style = R.style.alertDialog;
         int icon = R.drawable.ic_portable_wifi_off;
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, style);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setIcon(icon);
         builder.setMessage(message);

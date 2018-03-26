@@ -42,7 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             addPreferencesFromResource(R.xml.settings_main);
-
             sharedPreferences = getPreferenceScreen().getSharedPreferences();
             PreferenceScreen prefScreen = getPreferenceScreen();
             refreshSummary(prefScreen);

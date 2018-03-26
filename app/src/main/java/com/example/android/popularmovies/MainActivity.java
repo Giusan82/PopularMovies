@@ -18,7 +18,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,14 +38,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesList>>,
-        SharedPreferences.OnSharedPreferenceChangeListener{
-    private static final int LOADER_ID = 0;
-
+        SharedPreferences.OnSharedPreferenceChangeListener {
+    private static final int LOADER_ID = 0; //loader id of this activity
     private static final String SERVER_URL = "https://api.themoviedb.org/3/";
-    private static final String DISCOVER_PATH = "discover";
-    private static final String SEARCH_PATH = "search";
+    private static final String DISCOVER_PATH = "discover"; //this path is used to fill the list when activity is created
+    private static final String SEARCH_PATH = "search"; //this path is used for searching movie or tv show
     private final static String QUERY_PARAM = "query";
-    private final static String WITH_GENRE_PARAM = "with_genres";
+    private final static String WITH_GENRE_PARAM = "with_genres"; //this filter movies or tv shows with that genre id
     private final static String SORT_BY_PARAM = "sort_by";
     private final static String PAGE_PARAM = "page"; //this set the page displayed
     private final static String API_KEY = "api_key"; //this is the api key of themoviedb.org
@@ -87,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mIV_empty_list = findViewById(R.id.iv_empty);
         mTV_empty_list = findViewById(R.id.tv_empty);
 
+        //set the action when the respective views are clicked
         mPrevius_page_iv.setOnClickListener(previousPage);
         mNext_page_iv.setOnClickListener(nextPage);
 
@@ -100,19 +99,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         loaderManager = getLoaderManager();
         if (isConnected()) {
             loaderManager.initLoader(LOADER_ID, null, this);
-        }else{
+        } else {
+            //if there are no internet connection, an alert dialog message is displayed
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
             alertDialogMessage(title, message);
         }
-
-
         //the ArrayList is initialized
         mItems = new ArrayList<>();
         adapter = new GridAdapter(this, mItems);
         recyclerView.setAdapter(adapter);
-
-
         //Register MainActivity as an OnSharedPreferenceChangedListener to receive a callback when a SharedPreference has changed.
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
@@ -120,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private View.OnClickListener previousPage = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(mPage >1){
+            if (mPage > 1) {
                 mPage--;
                 refresh();
             }
@@ -129,10 +125,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private View.OnClickListener nextPage = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(mTotal_page > 1){
+            if (mTotal_page > 1) {
                 mPage++;
                 refresh();
-                if(mPage == mTotal_page){
+                if (mPage == mTotal_page) {
                     mPage = 0;
                 }
             }
@@ -162,13 +158,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 //and notify to adapter to update the data
                 adapter.notifyDataSetChanged();
                 mLoading_list.setVisibility(View.GONE);
-            }else{
+            } else {
                 clear();
                 mLoading_list.setVisibility(View.GONE);
                 mIV_empty_list.setVisibility(View.VISIBLE);
                 mTV_empty_list.setVisibility(View.VISIBLE);
             }
-        }else {
+        } else {
             mLoading_list.setVisibility(View.GONE);
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
@@ -180,7 +176,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<MoviesList>> loader) {
         clear();
     }
+
     private void clear() {
+        //clear the arraylist and scroll the recyclerview to position 0
         this.mItems.clear();
         recyclerView.scrollToPosition(0);
         adapter.notifyDataSetChanged();
@@ -212,8 +210,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 return true;
             }
         });
-
-        MenuItem searchType= menu.findItem(R.id.sp_search_type);
+        //setup a spinner in the actionBar for filtering movies or tv shows
+        MenuItem searchType = menu.findItem(R.id.sp_search_type);
         Spinner searchType_spinner = (Spinner) searchType.getActionView();
         ArrayAdapter searchTypeAdapter = ArrayAdapter.createFromResource(this, R.array.search_type, android.R.layout.simple_spinner_item);
         searchTypeAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
@@ -227,11 +225,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             String selection = (String) adapterView.getItemAtPosition(i);
-            if(!TextUtils.isEmpty(selection)){
-                if(selection.equals(getString(R.string.search_movies))){
+            if (!TextUtils.isEmpty(selection)) {
+                if (selection.equals(getString(R.string.search_movies))) {
                     SharedData.setSearchType(getApplicationContext(), i);
                 }
-                if(selection.equals(getString(R.string.search_tv))){
+                if (selection.equals(getString(R.string.search_tv))) {
                     SharedData.setSearchType(getApplicationContext(), i);
                 }
             }
@@ -247,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            //this open the settings activity
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
             return true;
@@ -269,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     .appendPath(type)
                     .appendQueryParameter(SORT_BY_PARAM, orderBy)
                     .appendQueryParameter(WITH_GENRE_PARAM, genre);
-        }else{
+        } else {
             builtUri.appendPath(SEARCH_PATH)
                     .appendPath(type)
                     .appendQueryParameter(QUERY_PARAM, query);
@@ -283,7 +282,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         URL url = null;
         try {
             url = new URL(builtUri.toString());
-            Log.e("Main", url.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -294,9 +292,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //determine if connection is active after the search button is clicked
         if (isConnected()) {
             //restart the loader with the new data
-                mPage =1;
-                query = input;
-                refresh();
+            mPage = 1;
+            query = input;
+            refresh();
         } else {
             mLoading_list.setVisibility(View.GONE);
             String title = getString(R.string.no_internet_title);
@@ -318,10 +316,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return isConnected;
     }
 
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        mPage =1;
+        //when a sharedPreferences si changed
+        mPage = 1;
         clear();
         refresh();
         mLoading_list.setVisibility(View.VISIBLE);
@@ -338,7 +336,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //build an alert dialog message for no internet connection
     public void alertDialogMessage(String title, String message) {
         int icon = R.drawable.ic_portable_wifi_off;
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setIcon(icon);

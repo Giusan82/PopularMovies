@@ -7,16 +7,16 @@ import android.util.Log;
 
 import java.util.List;
 
-public class DataLoader extends AsyncTaskLoader<List<MoviesList>>{
-
+public class DataLoader extends AsyncTaskLoader<List<MoviesList>> {
     private String mUrl; //Query Url
     private Context mContext;
     private List<MoviesList> mList;
 
-    /**Costructor
+    /**
+     * Costructor
      *
      * @param context of the activity
-     * @param url to load data from server
+     * @param url     to load data from server
      */
     public DataLoader(Context context, String url) {
         super(context);
@@ -26,19 +26,19 @@ public class DataLoader extends AsyncTaskLoader<List<MoviesList>>{
 
     @Override
     protected void onStartLoading() {
-        if(mList != null){
+        if (mList != null) {
             deliverResult(mList);
-        }else{
+        } else {
             forceLoad();
         }
     }
 
     @Override
     public List<MoviesList> loadInBackground() {
-        if(mUrl == null){
+        if (mUrl == null) {
             Log.e("DataLoader", "Url is null");
             return null;
-        }else{
+        } else {
             return ApiRequest.fetchData(mContext, mUrl);
         }
     }
