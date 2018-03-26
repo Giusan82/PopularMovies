@@ -13,10 +13,11 @@ on.</li>
 
 </ul>
 <p>The API Key is not included in the project. If you wish try this app, just create a values/secrets.xml file in your resources and add the following lines:</p>
-<pre>
+<pre>[
 <resources>
     <string name="api_key">your_api_key</string>
 </resources>
+]
 </pre>
 <p>Here some screenshots:</p>
 <p align="center">
