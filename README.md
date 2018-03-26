@@ -12,7 +12,7 @@ on.</li>
 <li>The image are displayed using the Image Loader Library <a href="https://github.com/bumptech/glide">Glide</a>, which it handles image loading/caching.</li>
 
 </ul>
-<p>The API Key is not included in the project. If you wish try this app, just create a values/secrets.xml file in your resources and add the following lines:</p>
+<p>The API Key is not included in the project. If you wish try this app, just create a res/values/secrets.xml file in your resources as explained in the guide <a href="https://github.com/codepath/android_guides/wiki/Storing-Secret-Keys-in-Android">"Storing Secret Keys in Android"</a> and then add the following lines:</p>
 <pre>
 &lt;resources&gt;
     &lt;string name="api_key"&gt;your_api_key&lt;/string&gt;
