@@ -21,14 +21,7 @@ on.</li>
 
 <p>Here some screenshots:</p>
 <p align="center">
-  <img src="2018-01-16_02.28.01.151.png" height="450" style="max-width:100%;">
-  <img src="2018-01-16_02.13.51.315.png" height="450" style="max-width:100%;">
-  <img src="2018-01-16_15.02.00.933.png" height="450" style="max-width:100%;">
+  <img src="2018-03-26_145158.jpg" height="450" style="max-width:100%;">
+  <img src="2018-03-26_144938.jpg" height="450" style="max-width:100%;">
 </p>
-<p>Here an example of a zooming Android ImageView:</p>
-<p align="center">
-  <img src="2017-12-22_004819.jpg" height="480" style="max-width:100%;">
-</p>
-<p align="center">
-  <img src="2017-12-22_004843.jpg" height="480" style="max-width:100%;">
-</p>
+
