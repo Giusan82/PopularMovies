@@ -20,7 +20,7 @@ public class ApiRequest {
     /**
      * Fetch data from server database and return an object to represent a single item.
      */
-    public static List<MoviesList> fetchData(Context context, String stringUrl) {
+    public static List<MoviesData> fetchData(Context context, String stringUrl) {
         // Create URL object
         URL url = null;
         try {
@@ -36,7 +36,7 @@ public class ApiRequest {
             Log.e(LOG_TAG + " -> IOException", "fetchData: " + e.getMessage());
         }
         // Extract relevant fields from the JSON response and create a list of items
-        List<MoviesList> movies = JsonParser.parsingData(context, jsonResponse);
+        List<MoviesData> movies = JsonParser.parsingData(context, jsonResponse);
         return movies;
     }
 

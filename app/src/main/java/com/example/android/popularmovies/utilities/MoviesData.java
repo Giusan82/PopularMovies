@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MoviesList{
-    public static final String LOG_TAG = MoviesList.class.getName();
+public class MoviesData {
+    public static final String LOG_TAG = MoviesData.class.getName();
     private static final String SEPARATOR_LIST = ", ";
     private static final String END_LIST = ".";
     private Context mContext;
@@ -42,13 +42,33 @@ public class MoviesList{
     private int mNumberOfSeasons;
     private int mNumberOfEpisodes;
 
+    //Country List
+    private String mLanguageCode;
+    private String mLanguageName;
+    private String mEnglishName;
+
+    //Genre ids list
+    private String mGenreID;
+    private String mGenreName;
+
     /**
-     * Constructor
+     * Constructors
      */
-    public MoviesList() {
+    public MoviesData() {
     }
 
-    public MoviesList(Context context,
+    public MoviesData(String language_code, String language_name, String english_name){
+        this.mLanguageCode = language_code;
+        this.mLanguageName = language_name;
+        this.mEnglishName = english_name;
+    }
+
+    public MoviesData(String genre_id, String genre_name){
+        this.mGenreID = genre_id;
+        this.mGenreName = genre_name;
+    }
+
+    public MoviesData(Context context,
                       int page,
                       int total_page,
                       int total_results,
@@ -66,7 +86,7 @@ public class MoviesList{
         this.mVote_Average = vote_average;
     }
 
-    public MoviesList(Context context,
+    public MoviesData(Context context,
                       int page,
                       int total_page,
                       int total_results,
@@ -216,6 +236,16 @@ public class MoviesList{
     public int getNumberOfEpisodes() {
         return mNumberOfEpisodes;
     }
+
+    public String getLanguageCode(){return mLanguageCode;}
+
+    public String getLanguageName(){return mLanguageName;}
+
+    public String getLanguageEnglishName(){return mEnglishName;}
+
+    public String getGenreID(){return mGenreID;}
+
+    public String getGenreName(){return mGenreName;}
 
     //for getting the date conversion
     public String formatDate(String date) {

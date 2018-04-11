@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -12,7 +13,9 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -21,7 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.popularmovies.utilities.DataLoader;
-import com.example.android.popularmovies.utilities.MoviesList;
+import com.example.android.popularmovies.utilities.MoviesData;
 import com.example.android.popularmovies.utilities.SharedData;
 
 import java.net.MalformedURLException;
@@ -29,7 +32,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesList>> {
+public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesData>> {
     public static final String EXTRA_MOVIE_ID = "extra_movie_id";
     public static final String EXTRA_MOVIE_TITLE = "extra_movie_title";
     public static final int DEFAULT_ID = 0;
@@ -40,10 +43,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private static final int LOADER_ID = 1; //loader id of this activity
     private static final String SERVER_URL = "https://api.themoviedb.org/3/";
     private final static String API_KEY = "api_key"; //this is the api key of themoviedb.org
+    private static final String KEY_LANGUAGE = "language";
     private int mId;
     private String mTitle;
     private LoaderManager loaderManager;
-    private ArrayList<MoviesList> mItems;
+    private ArrayList<MoviesData> mItems;
     private String[] searchValue;
     private ProgressBar mLoading_header;
     private ProgressBar mLoading_activity;
@@ -64,11 +68,13 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private RatingBar mRatingBar;
     private ImageView mEmpty_Image;
     private TextView mEmpty_message;
+    private SharedPreferences sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         //Find the id for the respective views
         cl_content = findViewById(R.id.cl_content);
         mOriginalTitle = findViewById(R.id.tv_original_title);
@@ -95,6 +101,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_MOVIE_ID)) {
             mId = intent.getIntExtra(EXTRA_MOVIE_ID, DEFAULT_ID);
+            Log.e("DetailActivity", "Movie ID: " + mId);
         }
         if (intent.hasExtra(EXTRA_MOVIE_TITLE)) {
             mTitle = intent.getStringExtra(EXTRA_MOVIE_TITLE);
@@ -115,12 +122,12 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
-    public Loader<List<MoviesList>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<MoviesData>> onCreateLoader(int i, Bundle bundle) {
         return new DataLoader(this, builderUrl(mId).toString());
     }
 
     @Override
-    public void onLoadFinished(Loader<List<MoviesList>> loader, List<MoviesList> data) {
+    public void onLoadFinished(Loader<List<MoviesData>> loader, List<MoviesData> data) {
         if (isConnected()) {
             clear();
             if (data != null && !data.isEmpty()) {
@@ -128,7 +135,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 mItems.addAll(data);
                 String header = mItems.get(0).getBackground_Path();
                 if (!header.equals(NULL_VALUE)) {
-                    Glide.with(this).load(IMAGE_BASE_HEADER + header).crossFade().dontTransform().into(mHeader);
+                    Glide.with(this).load(IMAGE_BASE_HEADER + header).thumbnail(0.1f).dontTransform().into(mHeader);
                 } else {
                     mHeader.setVisibility(View.GONE);
                     mLoading_header.setVisibility(View.GONE);
@@ -177,7 +184,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
-    public void onLoaderReset(Loader<List<MoviesList>> loader) {
+    public void onLoaderReset(Loader<List<MoviesData>> loader) {
         clear();
     }
 
@@ -188,10 +195,12 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     //this builds the url
     private URL builderUrl(int id) {
         String type = searchValue[SharedData.getSearchType(this)];
+        String language = sharedPrefs.getString(getString(R.string.settings_language_key), getString(R.string.settings_language_default));
         Uri.Builder builtUri;
         builtUri = Uri.parse(SERVER_URL).buildUpon();
         builtUri.appendPath(type)
                 .appendPath(String.valueOf(id))
+                .appendQueryParameter(KEY_LANGUAGE, language)
                 .appendQueryParameter(API_KEY, getString(R.string.api_key))
                 .build();
         URL url = null;
@@ -200,6 +209,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        Log.e("DetailActivity", url.toString());
         return url;
     }
 

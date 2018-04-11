@@ -7,10 +7,10 @@ import android.util.Log;
 
 import java.util.List;
 
-public class DataLoader extends AsyncTaskLoader<List<MoviesList>> {
+public class DataLoader extends AsyncTaskLoader<List<MoviesData>> {
     private String mUrl; //Query Url
     private Context mContext;
-    private List<MoviesList> mList;
+    private List<MoviesData> mList;
 
     /**
      * Costructor
@@ -34,7 +34,7 @@ public class DataLoader extends AsyncTaskLoader<List<MoviesList>> {
     }
 
     @Override
-    public List<MoviesList> loadInBackground() {
+    public List<MoviesData> loadInBackground() {
         if (mUrl == null) {
             Log.e("DataLoader", "Url is null");
             return null;
@@ -44,7 +44,7 @@ public class DataLoader extends AsyncTaskLoader<List<MoviesList>> {
     }
 
     @Override
-    public void deliverResult(List<MoviesList> data) {
+    public void deliverResult(List<MoviesData> data) {
         mList = data;
         super.deliverResult(data);
     }

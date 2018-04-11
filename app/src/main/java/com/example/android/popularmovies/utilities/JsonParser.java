@@ -9,7 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class JsonParser {
     private static final String LOG_TAG = JsonParser.class.getSimpleName();
@@ -34,7 +36,6 @@ public class JsonParser {
     private static final String KEY_FIRST_AIR_DATE = "first_air_date";
     private static final String KEY_VIDEO = "video";
     private static final String KEY_ADULT = "adult";
-    private static final String KEY_GENRE_NAME = "name";
     private static final String KEY_PRODUCTION_COMPANIES = "production_companies";
     private static final String KEY_PRODUCTION_COMPANIES_NAME = "name";
     private static final String KEY_PRODUCTION_COUNTRIES = "production_countries";
@@ -48,11 +49,20 @@ public class JsonParser {
     private static final String KEY_SEASONS = "number_of_seasons";
     private static final String KEY_EPISODES = "number_of_episodes";
 
+    //Parsing country list
+    private static final String KEY_LANGUAGE_CODE = "iso_639_1";
+    private static final String KEY_LANGUAGE_ENGLISH_NAME = "english_name";
+    private static final String KEY_LANGUAGE_NAME = "name";
+
+    //Parsing genre list
+    private static final String KEY_GENRE_ID = "id";
+    private static final String KEY_GENRE_NAME = "name";
+
     /**
-     * Return a list of {@link MoviesList} objects that has been built up from parsing a JSON response.
+     * Return a list of {@link MoviesData} objects that has been built up from parsing a JSON response.
      */
-    public static List<MoviesList> parsingData(Context context, String jsonResponse) {
-        ArrayList<MoviesList> list = new ArrayList<>();
+    public static List<MoviesData> parsingData(Context context, String jsonResponse) {
+        ArrayList<MoviesData> list = new ArrayList<>();
 
         // Try to parse the JSON Response.
         try {
@@ -74,7 +84,7 @@ public class JsonParser {
                         }
                         String poster = results.optJSONObject(i).optString(KEY_POSTER_PATH);
                         double vote_average = results.optJSONObject(i).optDouble(KEY_VOTE_AVERAGE);
-                        final MoviesList movies = new MoviesList(
+                        final MoviesData movies = new MoviesData(
                                 context,
                                 page,
                                 total_pages,
@@ -161,7 +171,7 @@ public class JsonParser {
                 String status = base.optString(KEY_STATUS);
                 int seasons = base.optInt(KEY_SEASONS);
                 int episodes = base.optInt(KEY_EPISODES);
-                final MoviesList movies = new MoviesList(
+                final MoviesData movies = new MoviesData(
                         context,
                         page,
                         total_pages,
@@ -194,4 +204,77 @@ public class JsonParser {
         }
         return list;
     }
+    public static List<MoviesData> parsingLanguageList(Context context, String jsonLanguage) {
+        ArrayList<MoviesData> list = new ArrayList<>();
+        // Try to parse the JSON Response.
+        try {
+            //This creates the root JSONObject by calling jsonResponse
+            JSONArray base = new JSONArray(jsonLanguage);
+            for(int i = 0; i < base.length(); i++){
+                String iso = base.optJSONObject(i).optString(KEY_LANGUAGE_CODE);
+                String name = base.optJSONObject(i).optString(KEY_LANGUAGE_NAME);
+                String english_name = base.optJSONObject(i).optString(KEY_LANGUAGE_ENGLISH_NAME);
+
+                MoviesData languages = new MoviesData(iso, name, english_name);
+                list.add(languages);
+            }
+        }catch (JSONException e){
+            Log.e(LOG_TAG + " -> JSONException", "Problem with parsing JSON in LanguageList, message: " + e);
+        }
+        return list;
+    }
+
+    public static List<MoviesData> parsingGenreList(Context context, String jsonMovie, String jsonTv) {
+        ArrayList<MoviesData> list = new ArrayList<>();
+        ArrayList<MoviesData> tvList = new ArrayList<>();
+        // Try to parse the JSON Response.
+        try {
+            //This creates the root JSONObject by calling jsonResponse
+            JSONObject movie = new JSONObject(jsonMovie);
+            if (movie.has(KEY_GENRES)){
+                JSONArray genres = movie.optJSONArray(KEY_GENRES);
+                for(int i = 0; i < genres.length(); i++){
+                    String id = genres.optJSONObject(i).optString(KEY_GENRE_ID);
+                    String name = genres.optJSONObject(i).optString(KEY_GENRE_NAME);
+
+                    MoviesData genre = new MoviesData(id, name);
+                    list.add(genre);
+                }
+            }
+
+            JSONObject tv = new JSONObject(jsonTv);
+            if (tv.has(KEY_GENRES)){
+                JSONArray genres = tv.optJSONArray(KEY_GENRES);
+                for(int i = 0; i < genres.length(); i++){
+                    String id = genres.optJSONObject(i).optString(KEY_GENRE_ID);
+                    String name = genres.optJSONObject(i).optString(KEY_GENRE_NAME);
+
+                    MoviesData genre = new MoviesData(id, name);
+                    tvList.add(genre);
+                }
+            }
+            for(int i = 0; i < list.size(); i++){
+                for(int j = 0; j < tvList.size(); j++){
+                    if(list.get(i).getGenreID().equals(tvList.get(j).getGenreID())){
+                        list.remove(i);
+                    }
+                }
+            }
+            list.addAll(tvList);
+        }catch (JSONException e){
+            Log.e(LOG_TAG + " -> JSONException", "Problem with parsing JSON in GenreList, message: " + e);
+        }
+        return list;
+    }
+
+//    public static List<MoviesData> parsingGData(Context context, String jsonResponse) {
+//        List<MoviesData> list;
+//
+//        Gson gson = new Gson();
+//        Type listType = new TypeToken<ArrayList<MoviesData>>(){}.getType();
+//        list = gson.fromJson(jsonResponse, listType);
+//
+//        return list;
+//    }
+
 }

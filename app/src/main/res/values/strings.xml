@@ -33,7 +33,7 @@
     <string name="production_companies"><![CDATA[<b>Production Companies:</b>]]> %1$s</string>
     <string name="production_countries"><![CDATA[<b>Production Countries:</b>]]> %1$s</string>
     <string name="runtime"><![CDATA[<b>Duration:</b>]]> %1$d min</string>
-    <string name="spoken_languages"><![CDATA[<b>Languages:</b>]]> %1$s</string>
+    <string name="spoken_languages"><![CDATA[<b>Spoken Languages:</b>]]> %1$s</string>
     <string name="status"><![CDATA[<b>Status:</b>]]> %1$s</string>
     <string name="seasons_and_episodes"><![CDATA[<b>Seasons:</b>]]> %1$d | <![CDATA[<b>Episodes:</b>]]> %2$d</string>
 
@@ -45,8 +45,8 @@
     <string name="search_tv_value" translatable="false">tv</string>
 
     <!--Category settings [CHAR LIMIT=NONE]-->
-    <string name="category_general">General</string>
-    <string name="category_filter">Search Filters</string>
+    <string name="category_general">General Settings</string>
+    <string name="category_filter">Search Movie/Tv Show Filters</string>
 
     <!-- Strings For Order By Preference [CHAR LIMIT=NONE] -->
     <string name="settings_orderBy_label">Order By</string>
@@ -75,46 +75,9 @@
     <string name="settings_genre_ids_key" translatable="false">with_genres</string>
     <string name="settings_genre_ids_default" translatable="false"></string>
     <!-- String for Genre Ids option [CHAR LIMIT=NONE] -->
-    <string name="settings_all_genres_label">All</string>
-    <string name="settings_all_genres_value" translatable="false"></string>
-    <string name="settings_Action_label">Action</string>
-    <string name="settings_Action_value" translatable="false">28</string>
-    <string name="settings_Adventure_label">Adventure</string>
-    <string name="settings_Adventure_value" translatable="false">12</string>
-    <string name="settings_Animation_label">Animation</string>
-    <string name="settings_Animation_value" translatable="false">16</string>
-    <string name="settings_Comedy_label">Comedy</string>
-    <string name="settings_Comedy_value" translatable="false">35</string>
-    <string name="settings_Crime_label">Crime</string>
-    <string name="settings_Crime_value" translatable="false">80</string>
-    <string name="settings_Documentary_label">Animation</string>
-    <string name="settings_Documentary_value" translatable="false">99</string>
-    <string name="settings_Drama_label">Drama</string>
-    <string name="settings_Drama_value" translatable="false">18</string>
-    <string name="settings_Family_label">Family</string>
-    <string name="settings_Family_value" translatable="false">10751</string>
-    <string name="settings_Fantasy_label">Fantasy</string>
-    <string name="settings_Fantasy_value" translatable="false">14</string>
-    <string name="settings_History_label">History</string>
-    <string name="settings_History_value" translatable="false">36</string>
-    <string name="settings_Horror_label">Horror</string>
-    <string name="settings_Horror_value" translatable="false">27</string>
-    <string name="settings_Music_label">Music</string>
-    <string name="settings_Music_value" translatable="false">10402</string>
-    <string name="settings_Mystery_label">Family</string>
-    <string name="settings_Mystery_value" translatable="false">9648</string>
-    <string name="settings_Romance_label">Romance</string>
-    <string name="settings_Romance_value" translatable="false">10749</string>
-    <string name="settings_Science_Fiction_label">Science Fiction</string>
-    <string name="settings_Science_Fiction_value" translatable="false">878</string>
-    <string name="settings_TV_Movie_label">TV Movie</string>
-    <string name="settings_TV_Movie_value" translatable="false">10770</string>
-    <string name="settings_Thriller_label">Thriller</string>
-    <string name="settings_Thriller_value" translatable="false">53</string>
-    <string name="settings_War_label">War</string>
-    <string name="settings_War_value" translatable="false">10752</string>
-    <string name="settings_Western_label">Western</string>
-    <string name="settings_Western_value" translatable="false">37</string>
+    <string name="settings_any_genres_label">Any</string>
+    <string name="settings_any_genres_value" translatable="false"></string>
+
 
     <!--Switch buttons  [CHAR LIMIT=NONE]-->
     <string name="settings_adult_content_label">Include Adult Content</string>
@@ -123,4 +86,16 @@
     <string name="settings_include_video_key" translatable="false">include_video</string>
     <string name="checkbox_summary_on">On</string>
     <string name="checkbox_summary_off">Off</string>
+
+    <!-- Strings For Language Codes Preference [CHAR LIMIT=NONE] -->
+    <string name="settings_language_label">Contents Language</string>
+    <string name="settings_language_key" translatable="false">language_ids</string>
+    <string name="settings_language_default" translatable="false">en</string>
+
+    <!-- Strings For Original Language Codes Preference [CHAR LIMIT=NONE] -->
+    <string name="settings_original_language_label">Production Language</string>
+    <string name="settings_original_language_key" translatable="false">original_language_ids</string>
+    <string name="settings_original_language_default" translatable="false"></string>
+    <string name="settings_any_original_language_label">Any</string>
+    <string name="settings_any_original_language_value" translatable="false"></string>
 </resources>

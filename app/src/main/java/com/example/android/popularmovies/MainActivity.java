@@ -18,6 +18,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.android.popularmovies.utilities.DataLoader;
-import com.example.android.popularmovies.utilities.MoviesList;
+import com.example.android.popularmovies.utilities.MoviesData;
 import com.example.android.popularmovies.utilities.SharedData;
 
 import java.net.MalformedURLException;
@@ -37,21 +38,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesList>>,
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<MoviesData>>,
         SharedPreferences.OnSharedPreferenceChangeListener {
     private static final int LOADER_ID = 0; //loader id of this activity
     private static final String SERVER_URL = "https://api.themoviedb.org/3/";
     private static final String DISCOVER_PATH = "discover"; //this path is used to fill the list when activity is created
     private static final String SEARCH_PATH = "search"; //this path is used for searching movie or tv show
-    private final static String QUERY_PARAM = "query";
-    private final static String WITH_GENRE_PARAM = "with_genres"; //this filter movies or tv shows with that genre id
-    private final static String SORT_BY_PARAM = "sort_by";
-    private final static String PAGE_PARAM = "page"; //this set the page displayed
-    private final static String API_KEY = "api_key"; //this is the api key of themoviedb.org
-    private final static String INCLUDE_ADULT_PARAM = "include_adult";
-    private final static String INCLUDE_VIDEO_PARAM = "include_video";
+    private static final String QUERY_PARAM = "query";
+    private static final String WITH_GENRE_PARAM = "with_genres"; //this filter movies or tv shows with that genre id
+    private static final String SORT_BY_PARAM = "sort_by";
+    private static final String PAGE_PARAM = "page"; //this set the page displayed
+    private static final String API_KEY = "api_key"; //this is the api key of themoviedb.org
+    private static final String INCLUDE_ADULT_PARAM = "include_adult";
+    private static final String INCLUDE_VIDEO_PARAM = "include_video";
+    private static final String LANGUAGE_PARAM = "language";
+    private static final String ORIGINAL_LANGUAGE_PARAM = "with_original_language";
+
     private RecyclerView recyclerView;
-    private ArrayList<MoviesList> mItems;
+    private ArrayList<MoviesData> mItems;
     private GridAdapter adapter;
     private SharedPreferences sharedPrefs;
     private String[] searchValue;
@@ -136,14 +140,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     };
 
     @Override
-    public Loader<List<MoviesList>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<MoviesData>> onCreateLoader(int i, Bundle bundle) {
         mIV_empty_list.setVisibility(View.GONE);
         mTV_empty_list.setVisibility(View.GONE);
         return new DataLoader(this, builderUrl(query).toString());
     }
 
     @Override
-    public void onLoadFinished(Loader<List<MoviesList>> loader, List<MoviesList> data) {
+    public void onLoadFinished(Loader<List<MoviesData>> loader, List<MoviesData> data) {
         if (isConnected()) {
             clear();
             if (data != null && !data.isEmpty()) {
@@ -173,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoaderReset(Loader<List<MoviesList>> loader) {
+    public void onLoaderReset(Loader<List<MoviesData>> loader) {
         clear();
     }
 
@@ -260,6 +264,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Boolean adult = sharedPrefs.getBoolean(getString(R.string.settings_adult_content_key), getResources().getBoolean(R.bool.pref_include_adult));
         Boolean video = sharedPrefs.getBoolean(getString(R.string.settings_include_video_key), getResources().getBoolean(R.bool.pref_include_video));
         String type = searchValue[SharedData.getSearchType(this)];
+        String language = sharedPrefs.getString(getString(R.string.settings_language_key), getString(R.string.settings_language_default));
+        String original_language = sharedPrefs.getString(getString(R.string.settings_original_language_key), getString(R.string.settings_original_language_default));
 
         Uri.Builder builtUri;
         builtUri = Uri.parse(SERVER_URL).buildUpon();
@@ -277,6 +283,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 .appendQueryParameter(API_KEY, getString(R.string.api_key))
                 .appendQueryParameter(INCLUDE_ADULT_PARAM, adult.toString())
                 .appendQueryParameter(INCLUDE_VIDEO_PARAM, video.toString())
+                .appendQueryParameter(LANGUAGE_PARAM, language)
+                .appendQueryParameter(ORIGINAL_LANGUAGE_PARAM, original_language)
                 .build();
 
         URL url = null;
@@ -285,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        Log.e("MainActivity", "url: " + url);
         return url;
     }
 

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/category_filter">
+    <PreferenceCategory android:title="@string/category_general"
+        android:layout="@layout/preferences_category">
+        <ListPreference
+            android:defaultValue="@string/settings_language_default"
+            android:key="@string/settings_language_key"
+            android:title="@string/settings_language_label"
+            />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_filter"
+        android:layout="@layout/preferences_category">
         <ListPreference
             android:defaultValue="@string/settings_orderBy_default"
             android:entries="@array/order_by_labels"
@@ -9,10 +18,14 @@
             android:title="@string/settings_orderBy_label" />
         <ListPreference
             android:defaultValue="@string/settings_genre_ids_default"
-            android:entries="@array/genre_ids_labels"
-            android:entryValues="@array/genre_ids_values"
             android:key="@string/settings_genre_ids_key"
             android:title="@string/settings_genre_ids_label" />
+
+        <ListPreference
+            android:defaultValue="@string/settings_original_language_default"
+            android:key="@string/settings_original_language_key"
+            android:title="@string/settings_original_language_label" />
+
         <android.support.v7.preference.SwitchPreferenceCompat
             android:defaultValue="@bool/pref_include_adult"
             android:key="@string/settings_adult_content_key"
