@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.preference.PreferenceManager;
 
-import com.example.android.popularmovies.R;
-
 public final class SharedData {
     public static final String EXTRA_MOVIE_ID = "extra_movie_id";
     public static final String EXTRA_MOVIE_TITLE = "extra_movie_title";

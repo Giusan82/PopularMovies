@@ -15,7 +15,7 @@ public class DataContract {
     public static final String CONTENT_AUTHORITY = "com.example.android.popularmovies";
     //Base URI used to contact the content provider.
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    //Path appended to base content URI referred to the items table
+    //Path appended to base content URI referred to the favorites table
     public static final String PATH_FAVORITES = "favorites";
 
     public static final class DataEntry implements BaseColumns {
@@ -39,10 +39,8 @@ public class DataContract {
         public static final String COLUMN_NAME = "name";
         //item's date. Type: REAL
         public static final String COLUMN_CREATION_DATE = "creation_date";
-
         //movie id. Type: INTEGER
         public static final String COLUMN_MOVIE_ID = "movie_id";
-
         //Type: INTEGER, 0 FOR MOVIE AND 1 FOR TV SHOW
         public static final String COLUMN_TYPE = "type";
         //Type: TEXT

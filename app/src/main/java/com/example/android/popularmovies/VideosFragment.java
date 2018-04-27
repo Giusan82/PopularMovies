@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +25,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class VideosFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<MoviesData>>, DialogManager.AlertDialogAction {
     private static final int LOADER_ID_VIDEOS = 5; //loader id of this activity
-    private static final int DIALOG_ID = 0;
+    private static final int DIALOG_ID = 0; //id of that dialog
     private SharedPreferences sharedPrefs;
     private String[] searchValue;
     private RecyclerView recyclerView;
@@ -45,7 +43,6 @@ public class VideosFragment extends Fragment implements LoaderManager.LoaderCall
     private ImageView mNext_page_iv;
     private TextView mPages_tv;
 
-    private Random rand;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -93,7 +90,6 @@ public class VideosFragment extends Fragment implements LoaderManager.LoaderCall
 
     //this builds the url
     private URL builderUrl(int id) {
-        Log.e("VideosFragment", "builderUrl: " + DetailsActivity.sDataType);
         String language = sharedPrefs.getString(getString(R.string.settings_language_key), getString(R.string.settings_language_default));
         Uri.Builder builtUri;
         builtUri = Uri.parse(NetUtils.SERVER_URL).buildUpon();
@@ -109,7 +105,6 @@ public class VideosFragment extends Fragment implements LoaderManager.LoaderCall
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.e("VideosFragment", url.toString());
         return url;
     }
 
@@ -122,7 +117,6 @@ public class VideosFragment extends Fragment implements LoaderManager.LoaderCall
     public void onLoadFinished(Loader<List<MoviesData>> loader, List<MoviesData> data) {
         if (NetUtils.isConnected(getContext())) {
             clear();
-            Log.e("ReviewsFragment", "onLoadFinished");
             if (data != null && !data.isEmpty()) {
                 //if not, add all items into the ArrayList
                 mItems.addAll(data);
@@ -138,10 +132,9 @@ public class VideosFragment extends Fragment implements LoaderManager.LoaderCall
                 mLoading_list.setVisibility(View.GONE);
                 mIV_empty_list.setVisibility(View.VISIBLE);
                 mTV_empty_list.setVisibility(View.VISIBLE);
-                Log.e("ReviewsFragment", "Data is null");
             }
         } else {
-            //mLoading_list.setVisibility(View.GONE);
+            mLoading_list.setVisibility(View.GONE);
             int icon = R.drawable.ic_portable_wifi_off;
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
@@ -165,6 +158,7 @@ public class VideosFragment extends Fragment implements LoaderManager.LoaderCall
     private void refresh() {
         loaderManager.restartLoader(LOADER_ID_VIDEOS, null, this);
     }
+
     @Override
     public void negativeAction(int dialog_id) {
         getActivity().finish();

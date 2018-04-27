@@ -18,12 +18,11 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.android.popularmovies.utilities.MoviesData;
 
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder>{
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
     private static final String LOG_TAG = ListAdapter.class.getSimpleName();
     private static final String IMAGE_BASE_URL = "https://img.youtube.com/vi/"; //source: https://stackoverflow.com/a/2068371
     private static final String DEFAULT_IMAGE_KEY = "default.jpg";
@@ -45,9 +44,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         int layoutId;
-        if(isReviews){
+        if (isReviews) {
             layoutId = R.layout.list_reviews;
-        }else{
+        } else {
             layoutId = R.layout.list_videos;
         }
 
@@ -59,10 +58,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     @Override
     public void onBindViewHolder(final ListViewHolder holder, int position) {
         final MoviesData current = mMoviesData.get(position);
-        if(isReviews){
+        if (isReviews) {
             holder.tv_author.setText(current.getAuthorReview());
             holder.tv_content_review.setText(current.getContent_Review());
-        }else{
+        } else {
             holder.tv_video_name.setText(current.getVideoName());
             holder.tv_video_type.setText(mContext.getString(R.string.video_type, current.getVideoType()));
             String imageUrl = builderUrl(current.getVideoKey()).toString();
@@ -105,10 +104,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             this.tv_video_name = itemView.findViewById(R.id.tv_video_name);
             this.tv_video_type = itemView.findViewById(R.id.tv_video_type);
             this.list_container = itemView.findViewById(R.id.video_container);
-            if(!isReviews){
+            if (!isReviews) {
                 this.list_container.setOnClickListener(mViewListener);
             }
         }
+
         private View.OnClickListener mViewListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,13 +117,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
                 //this open a youtube video
                 Intent app = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_APP_URI + current.getVideoKey())); //source: https://stackoverflow.com/a/12439378
                 Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_URL + current.getVideoKey()));
-                try{
+                try {
                     mContext.startActivity(app);
-                }catch (ActivityNotFoundException e){
+                } catch (ActivityNotFoundException e) {
                     mContext.startActivity(web);
                     Log.e(LOG_TAG, "Youtube app not found, message: " + e);
                 }
-
             }
         };
     }

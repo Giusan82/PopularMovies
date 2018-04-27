@@ -9,9 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class JsonParser {
     private static final String LOG_TAG = JsonParser.class.getSimpleName();
@@ -122,7 +120,7 @@ public class JsonParser {
         return list;
     }
 
-    public static MoviesData parsingData(Context context, String jsonResponse){
+    public static MoviesData parsingData(Context context, String jsonResponse) {
         MoviesData movies = null;
         try {
             JSONObject base = new JSONObject(jsonResponse);
@@ -228,13 +226,14 @@ public class JsonParser {
         }
         return movies;
     }
+
     public static List<MoviesData> parsingLanguageList(Context context, String jsonLanguage) {
         ArrayList<MoviesData> list = new ArrayList<>();
         // Try to parse the JSON Response.
         try {
             //This creates the root JSONObject by calling jsonResponse
             JSONArray base = new JSONArray(jsonLanguage);
-            for(int i = 0; i < base.length(); i++){
+            for (int i = 0; i < base.length(); i++) {
                 String iso = base.optJSONObject(i).optString(KEY_LANGUAGE_CODE);
                 String name = base.optJSONObject(i).optString(KEY_LANGUAGE_NAME);
                 String english_name = base.optJSONObject(i).optString(KEY_LANGUAGE_ENGLISH_NAME);
@@ -242,7 +241,7 @@ public class JsonParser {
                 MoviesData languages = new MoviesData(iso, name, english_name);
                 list.add(languages);
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             Log.e(LOG_TAG + " -> JSONException", "Problem with parsing JSON in LanguageList, message: " + e);
         }
         return list;
@@ -255,9 +254,9 @@ public class JsonParser {
         try {
             //This creates the root JSONObject by calling jsonResponse
             JSONObject movie = new JSONObject(jsonMovie);
-            if (movie.has(KEY_GENRES)){
+            if (movie.has(KEY_GENRES)) {
                 JSONArray genres = movie.optJSONArray(KEY_GENRES);
-                for(int i = 0; i < genres.length(); i++){
+                for (int i = 0; i < genres.length(); i++) {
                     String id = genres.optJSONObject(i).optString(KEY_GENRE_ID);
                     String name = genres.optJSONObject(i).optString(KEY_GENRE_NAME);
 
@@ -265,11 +264,10 @@ public class JsonParser {
                     list.add(genre);
                 }
             }
-
             JSONObject tv = new JSONObject(jsonTv);
-            if (tv.has(KEY_GENRES)){
+            if (tv.has(KEY_GENRES)) {
                 JSONArray genres = tv.optJSONArray(KEY_GENRES);
-                for(int i = 0; i < genres.length(); i++){
+                for (int i = 0; i < genres.length(); i++) {
                     String id = genres.optJSONObject(i).optString(KEY_GENRE_ID);
                     String name = genres.optJSONObject(i).optString(KEY_GENRE_NAME);
 
@@ -277,15 +275,15 @@ public class JsonParser {
                     tvList.add(genre);
                 }
             }
-            for(int i = 0; i < list.size(); i++){
-                for(int j = 0; j < tvList.size(); j++){
-                    if(list.get(i).getGenreID().equals(tvList.get(j).getGenreID())){
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = 0; j < tvList.size(); j++) {
+                    if (list.get(i).getGenreID().equals(tvList.get(j).getGenreID())) {
                         list.remove(i);
                     }
                 }
             }
             list.addAll(tvList);
-        }catch (JSONException e){
+        } catch (JSONException e) {
             Log.e(LOG_TAG + " -> JSONException", "Problem with parsing JSON in GenreList, message: " + e);
         }
         return list;

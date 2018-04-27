@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +25,7 @@ import com.example.android.popularmovies.data.DataContract.DataEntry;
 import java.util.ArrayList;
 
 public class FavoritesFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+
     private static final int DATA_LOADER_ID = 1;
     private RecyclerView recyclerView;
     private ArrayList<MoviesData> mItems;
@@ -72,7 +72,6 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
         return rootView;
     }
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         switch (id) {
@@ -94,10 +93,8 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (loader.getId() == DATA_LOADER_ID) {
             if (cursor == null) {
-                Log.e("FavoritesFragment", "cursor is null");
                 return;
             }
-            Log.e("FavoritesFragment", "onLoadFinished");
             clear();
             mLoading_list.setVisibility(View.GONE);
             String results = getString(R.string.number_results, cursor.getCount());
@@ -110,19 +107,15 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
 
                         mResults_tv.setText(results);
                         mItems.add(new MoviesData(getContext(), movie_id, title, poster_path, data_type));
-                        Log.e("FavoritesFragment", "cursor is not 0");
                     }
                     adapter.notifyDataSetChanged();
                     mIV_empty_list.setVisibility(View.GONE);
                     mTV_empty_list.setVisibility(View.GONE);
                 }else {
                     mResults_tv.setText(results);
-                    Log.e("FavoritesFragment", "cursor is 0");
                     mIV_empty_list.setVisibility(View.VISIBLE);
                     mTV_empty_list.setVisibility(View.VISIBLE);
                 }
-
-
         }
     }
 

@@ -1,16 +1,13 @@
 package com.example.android.popularmovies;
 
 
-import android.content.Context;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -30,7 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
 import com.example.android.popularmovies.utilities.DialogManager;
 import com.example.android.popularmovies.utilities.NetUtils;
 import com.example.android.popularmovies.utilities.ListLoader;
@@ -42,7 +38,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<MoviesData>>, SharedPreferences.OnSharedPreferenceChangeListener, DialogManager.AlertDialogAction{
+public class MainFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<MoviesData>>, SharedPreferences.OnSharedPreferenceChangeListener, DialogManager.AlertDialogAction {
 
     private static final int LOADER_ID = 0; //loader id of this activity
     private static final int LOADER_ID_REFRESH = 10;
@@ -66,21 +62,8 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     private TextView mTV_empty_list;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.e("MainFragment", "onAttach");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.e("MainFragment", "onCreate");
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setRetainInstance(true);
         setHasOptionsMenu(true);
         Log.e("MainFragment", "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -101,15 +84,11 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         mPrevius_page_iv.setOnClickListener(previousPage);
         mNext_page_iv.setOnClickListener(nextPage);
 
-        //Here is determined as the collection of items is displayed
-//        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),
-//                this.getResources().getInteger(R.integer.spanCount));
-       StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(this.getResources().getInteger(R.integer.spanCount),
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(this.getResources().getInteger(R.integer.spanCount),
                 StaggeredGridLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-
         // Get a reference to the LoaderManager, in order to interact with loaders.
         loaderManager = getLoaderManager();
         if (NetUtils.isConnected(getContext())) {
@@ -119,7 +98,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             int icon = R.drawable.ic_portable_wifi_off;
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
-            DialogManager dialogManager = new DialogManager(getContext(), DIALOG_ID,this);
+            DialogManager dialogManager = new DialogManager(getContext(), DIALOG_ID, this);
             dialogManager.showMessage(icon, title, message);
         }
         //the ArrayList is initialized
@@ -129,19 +108,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         //Register the fragment as an OnSharedPreferenceChangedListener to receive a callback when a SharedPreference has changed.
         PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
         return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.e("MainFragment", "onActivityCreated");
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-        }
     }
 
     //this create an ActionsBar menu and add an searchView on ActionsBar
@@ -178,7 +144,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
                 search_query.setText("");
                 searchField.setQuery("", false);
                 refresh();
-                Log.e("MainActivity", "SearchView Closed");
             }
         });
         //setup a spinner in the actionBar for filtering movies or tv shows
@@ -210,7 +175,6 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             SharedData.getSearchType(getContext());
         }
     };
-
     private View.OnClickListener previousPage = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -244,10 +208,9 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onLoadFinished(Loader<List<MoviesData>> loader, List<MoviesData> data) {
         if (NetUtils.isConnected(getContext())) {
             clear();
-            if(loader.getId() == LOADER_ID_REFRESH){
+            if (loader.getId() == LOADER_ID_REFRESH) {
                 recyclerView.scrollToPosition(0);
             }
-            Log.e("MainFragment", "onLoadFinished");
             if (data != null && !data.isEmpty()) {
                 //if not, add all items into the ArrayList
                 mItems.addAll(data);
@@ -271,7 +234,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             int icon = R.drawable.ic_portable_wifi_off;
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
-            DialogManager dialogManager = new DialogManager(getContext(), DIALOG_ID,this);
+            DialogManager dialogManager = new DialogManager(getContext(), DIALOG_ID, this);
             dialogManager.showMessage(icon, title, message);
         }
     }
@@ -286,6 +249,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         this.mItems.clear();
         adapter.notifyDataSetChanged();
     }
+
     //this builds the url
     private URL builderUrl(String query) {
         String orderBy = sharedPrefs.getString(getString(R.string.settings_orderBy_key), getString(R.string.settings_orderBy_default));
@@ -322,20 +286,21 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.e("MainActivity", "url: " + url);
         return url;
     }
 
     //restart the loader
+    //refresh using another id, because in this way avoid that the RecyclerView scroll up to zero position before than loading is complete when the user change the page
     private void refresh() {
         loaderManager.restartLoader(LOADER_ID_REFRESH, null, this);
     }
+
     private void search(String input) {
         //determine if connection is active after the search button is clicked
         if (NetUtils.isConnected(getContext())) {
             //restart the loader with the new data
             query = input;
-            if(!input.isEmpty()){
+            if (!input.isEmpty()) {
                 mPage = 1;
                 refresh();
             }
@@ -344,7 +309,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
             int icon = R.drawable.ic_portable_wifi_off;
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
-            DialogManager dialogManager = new DialogManager(getContext(), DIALOG_ID,this);
+            DialogManager dialogManager = new DialogManager(getContext(), DIALOG_ID, this);
             dialogManager.showMessage(icon, title, message);
         }
     }

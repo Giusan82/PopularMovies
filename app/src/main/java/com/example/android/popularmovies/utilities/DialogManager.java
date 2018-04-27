@@ -11,18 +11,20 @@ public class DialogManager {
     public final AlertDialogAction mAction;
     private int mDialogId;
 
-    public interface AlertDialogAction{
+    public interface AlertDialogAction {
         void negativeAction(int dialog_id);
+
         void positiveAction(int dialog_id);
     }
+
     //Constructor
-    public DialogManager(Context context, int dialog_id, AlertDialogAction dialog_action){
+    public DialogManager(Context context, int dialog_id, AlertDialogAction dialog_action) {
         this.mContext = context;
         this.mDialogId = dialog_id;
         this.mAction = dialog_action;
     }
 
-    //build an alert dialog message for no internet connection
+    //build an alert dialog message
     public void showMessage(int icon, String title, String message) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

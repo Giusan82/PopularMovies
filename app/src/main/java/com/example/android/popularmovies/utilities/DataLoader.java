@@ -4,15 +4,17 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
-public class DataLoader extends AsyncTaskLoader<MoviesData>{
+public class DataLoader extends AsyncTaskLoader<MoviesData> {
     private String mUrl; //Query Url
     private Context mContext;
     private MoviesData mData;
+
     public DataLoader(Context context, String url) {
         super(context);
         mContext = context;
         mUrl = url;
     }
+
     @Override
     protected void onStartLoading() {
         if (mData != null) {
@@ -21,6 +23,7 @@ public class DataLoader extends AsyncTaskLoader<MoviesData>{
             forceLoad();
         }
     }
+
     @Override
     public MoviesData loadInBackground() {
         if (mUrl == null) {
@@ -30,6 +33,7 @@ public class DataLoader extends AsyncTaskLoader<MoviesData>{
             return NetUtils.fetchData(mContext, mUrl);
         }
     }
+
     @Override
     public void deliverResult(MoviesData data) {
         mData = data;

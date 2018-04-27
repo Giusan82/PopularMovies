@@ -47,49 +47,31 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
     @Override
     public void onBindViewHolder(final GridViewHolder holder, int position) {
         final MoviesData current = mMoviesData.get(position);
-
         holder.tv_title.setText(current.getTitle());
         holder.rb_vote_average.setRating((float) current.getVote_Average() * 5 / 10);
         holder.tv_vote_average.setText(String.valueOf(current.getVote_Average()));
-
-        if(current.getPoster_Path() != null){
+        if (current.getPoster_Path() != null) {
             if (!current.getPoster_Path().equals(NULL_VALUE)) {
                 String imageUrl = IMAGE_BASE_URL + current.getPoster_Path();
-//            Glide.with(mContext).load(imageUrl).listener(new RequestListener<String, GlideDrawable>() {
-//                @Override
-//                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                    holder.tv_title.setVisibility(View.VISIBLE);
-//                    holder.tv_vote_average.setVisibility(View.VISIBLE);
-//                    holder.rb_vote_average.setVisibility(View.VISIBLE);
-//                    return false;
-//                }
-//            }).crossFade().dontTransform().into(holder.iv_poster);
-
                 Glide.with(mContext).load(imageUrl).asBitmap().dontAnimate().dontTransform().into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        if(resource != null){
+                        if (resource != null) {
                             holder.iv_poster.setMinimumHeight(resource.getHeight());
                             holder.iv_poster.setImageBitmap(resource);
                         }
                         holder.tv_title.setVisibility(View.VISIBLE);
-                        if(!isFavorite){
+                        if (!isFavorite) {
                             holder.tv_vote_average.setVisibility(View.VISIBLE);
                             holder.rb_vote_average.setVisibility(View.VISIBLE);
                         }
 
                     }
                 });
-
             } else {
                 holder.tv_title.setVisibility(View.VISIBLE);
                 holder.iv_poster.setImageResource(R.drawable.placeholder_poster);
-                if(!isFavorite){
+                if (!isFavorite) {
                     holder.tv_vote_average.setVisibility(View.VISIBLE);
                     holder.rb_vote_average.setVisibility(View.VISIBLE);
                 }
@@ -130,12 +112,11 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
                 Intent intent = new Intent(mContext, DetailsActivity.class);
                 intent.putExtra(SharedData.EXTRA_MOVIE_ID, current.getID());
                 intent.putExtra(SharedData.EXTRA_MOVIE_TITLE, current.getTitle());
-                if(isFavorite){
+                if (isFavorite) {
                     intent.putExtra(SharedData.EXTRA_MOVIE_TYPE, current.getDataType());
                 }
                 mContext.startActivity(intent);
             }
         };
     }
-
 }

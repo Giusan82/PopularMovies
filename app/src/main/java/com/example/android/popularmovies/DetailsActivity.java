@@ -4,16 +4,18 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.text.Html;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -81,6 +83,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        //Show the back arrow
+        ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         //Find the id for the respective views
         cl_content = findViewById(R.id.cl_content);
@@ -116,7 +123,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         Intent intent = getIntent();
         if (intent.hasExtra(SharedData.EXTRA_MOVIE_ID)) {
             sId = intent.getIntExtra(SharedData.EXTRA_MOVIE_ID, SharedData.DEFAULT_ID);
-            Log.e("DetailActivity", "Movie ID: " + sId);
         }
         if (intent.hasExtra(SharedData.EXTRA_MOVIE_TITLE)) {
             sTitle = intent.getStringExtra(SharedData.EXTRA_MOVIE_TITLE);
@@ -136,7 +142,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             int icon = R.drawable.ic_portable_wifi_off;
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
-            DialogManager dialogManager = new DialogManager(this, DIALOG_ID,this);
+            DialogManager dialogManager = new DialogManager(this, DIALOG_ID, this);
             dialogManager.showMessage(icon, title, message);
         }
     }
@@ -187,9 +193,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         public void onClick(View view) {
             //this open the MoreDetailActivity
             Intent intent = new Intent(DetailsActivity.this, MoreDetailsActivity.class);
-//            intent.putExtra(SharedData.EXTRA_MOVIE_ID, sId);
-//            intent.putExtra(SharedData.EXTRA_MOVIE_TITLE, sTitle);
-//            intent.putExtra(SharedData.EXTRA_MOVIE_TYPE, sDataType);
             startActivity(intent);
         }
     };
@@ -201,7 +204,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 return new DataLoader(this, builderUrl(sId).toString());
             case DATA_LOADER_ID:
                 Uri uri = DataEntry.CONTENT_URI;
-                String sortOrder = DataEntry.COLUMN_CREATION_DATE + " DESC";
                 String selection = DataEntry.COLUMN_MOVIE_ID + " = ?";
                 String[] selectionArgs = {String.valueOf(sId)};
                 return new CursorLoader(this,
@@ -270,14 +272,13 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 int icon = R.drawable.ic_portable_wifi_off;
                 String title = getString(R.string.no_internet_title);
                 String message = getString(R.string.no_internet);
-                DialogManager dialogManager = new DialogManager(this, DIALOG_ID,this);
+                DialogManager dialogManager = new DialogManager(this, DIALOG_ID, this);
                 dialogManager.showMessage(icon, title, message);
             }
         }
         if (loader.getId() == DATA_LOADER_ID) {
             Cursor cursor = (Cursor) data;
             int count = cursor.getCount();
-            Log.e("DetailsActivity", "Item found: " + count);
             if (count > 0) {
                 mTV_favorites.setText(getString(R.string.remove_favorites_button));
                 mIV_favorites.setImageResource(R.drawable.ic_favorite_enabled_24dp);
@@ -297,7 +298,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     //this builds the url
     private URL builderUrl(int id) {
-        Log.e("DetailsActivity", "builderUrl: " + sDataType);
         String language = sharedPrefs.getString(getString(R.string.settings_language_key), getString(R.string.settings_language_default));
         Uri.Builder builtUri;
         builtUri = Uri.parse(NetUtils.SERVER_URL).buildUpon();
@@ -312,7 +312,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.e("DetailActivity", url.toString());
         return url;
     }
 
@@ -329,5 +328,15 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     @Override
     public void positiveAction(int dialog_id) {
         refresh();
+    }
+
+    //Go back in the previous activity without reloading
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

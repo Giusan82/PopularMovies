@@ -68,13 +68,13 @@ public class MoviesData {
     public MoviesData() {
     }
 
-    public MoviesData(String language_code, String language_name, String english_name){
+    public MoviesData(String language_code, String language_name, String english_name) {
         this.mLanguageCode = language_code;
         this.mLanguageName = language_name;
         this.mEnglishName = english_name;
     }
 
-    public MoviesData(String genre_id, String genre_name){
+    public MoviesData(String genre_id, String genre_name) {
         this.mGenreID = genre_id;
         this.mGenreName = genre_name;
     }
@@ -264,27 +264,49 @@ public class MoviesData {
         return mNumberOfEpisodes;
     }
 
-    public String getLanguageCode(){return mLanguageCode;}
+    public String getLanguageCode() {
+        return mLanguageCode;
+    }
 
-    public String getLanguageName(){return mLanguageName;}
+    public String getLanguageName() {
+        return mLanguageName;
+    }
 
-    public String getLanguageEnglishName(){return mEnglishName;}
+    public String getLanguageEnglishName() {
+        return mEnglishName;
+    }
 
-    public String getGenreID(){return mGenreID;}
+    public String getGenreID() {
+        return mGenreID;
+    }
 
-    public String getGenreName(){return mGenreName;}
+    public String getGenreName() {
+        return mGenreName;
+    }
 
-    public int getDataType(){return mDataType;}
+    public int getDataType() {
+        return mDataType;
+    }
 
-    public String getAuthorReview(){return mAuthor;}
+    public String getAuthorReview() {
+        return mAuthor;
+    }
 
-    public String getContent_Review(){return mContent_Review;}
+    public String getContent_Review() {
+        return mContent_Review;
+    }
 
-    public String getVideoName(){return mVideoName;}
+    public String getVideoName() {
+        return mVideoName;
+    }
 
-    public String getVideoType(){return mVideoType;}
+    public String getVideoType() {
+        return mVideoType;
+    }
 
-    public String getVideoKey(){return mVideoKey;}
+    public String getVideoKey() {
+        return mVideoKey;
+    }
 
     //for getting the date conversion
     public String formatDate(String date) {

@@ -9,7 +9,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,7 +129,6 @@ public class ReviewsFragment extends Fragment implements LoaderManager.LoaderCal
             if(loader.getId() == LOADER_ID_REVIEWS_REFRESH){
                 recyclerView.scrollToPosition(0);
             }
-            Log.e("ReviewsFragment", "onLoadFinished");
             if (data != null && !data.isEmpty()) {
                 //if not, add all items into the ArrayList
                 mItems.addAll(data);
@@ -150,10 +148,9 @@ public class ReviewsFragment extends Fragment implements LoaderManager.LoaderCal
                 mLoading_list.setVisibility(View.GONE);
                 mIV_empty_list.setVisibility(View.VISIBLE);
                 mTV_empty_list.setVisibility(View.VISIBLE);
-                Log.e("ReviewsFragment", "Data is null");
             }
         } else {
-            //mLoading_list.setVisibility(View.GONE);
+            mLoading_list.setVisibility(View.GONE);
             int icon = R.drawable.ic_portable_wifi_off;
             String title = getString(R.string.no_internet_title);
             String message = getString(R.string.no_internet);
@@ -175,7 +172,6 @@ public class ReviewsFragment extends Fragment implements LoaderManager.LoaderCal
 
     //this builds the url
     private URL builderUrl(int id) {
-        Log.e("ReviewsFragment", "builderUrl: " + DetailsActivity.sDataType);
         String language = sharedPrefs.getString(getString(R.string.settings_language_key), getString(R.string.settings_language_default));
         Uri.Builder builtUri;
         builtUri = Uri.parse(NetUtils.SERVER_URL).buildUpon();
@@ -192,7 +188,6 @@ public class ReviewsFragment extends Fragment implements LoaderManager.LoaderCal
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.e("ReviewsFragment", url.toString());
         return url;
     }
 

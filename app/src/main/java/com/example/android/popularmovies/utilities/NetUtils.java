@@ -1,17 +1,9 @@
 package com.example.android.popularmovies.utilities;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-
-import com.example.android.popularmovies.MainActivity;
-import com.example.android.popularmovies.MainFragment;
-import com.example.android.popularmovies.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,13 +34,10 @@ public class NetUtils {
 
     private static final String LOG_TAG = NetUtils.class.getSimpleName();
     private static int serverResponse;
-    private static List<MoviesData> mList;
-
 
     /**
      * Fetch data from server database and return a list of items
      */
-
     public static List<MoviesData> fetchList(Context context, String stringUrl) {
         // Create URL object
         URL url = null;
@@ -66,14 +55,12 @@ public class NetUtils {
         }
         // Extract relevant fields from the JSON response and create a list of items
         List<MoviesData> movies = JsonParser.parsingList(context, jsonResponse);
-        Log.e("NetUtils", jsonResponse);
         return movies;
     }
 
     /**
      * Fetch data from server database and return a Json String of a single item.
      */
-
     public static MoviesData fetchData(Context context, String stringUrl) {
         // Create URL object
         URL url = null;
@@ -87,10 +74,9 @@ public class NetUtils {
         try {
             jsonResponse = httpRequest(url);
         } catch (IOException e) {
-            Log.e(LOG_TAG + " -> IOException", "fetchList: " + e.getMessage());
+            Log.e(LOG_TAG + " -> IOException", "fetchData: " + e.getMessage());
         }
         MoviesData movies = JsonParser.parsingData(context, jsonResponse);
-        Log.e("NetUtils", jsonResponse);
         return movies;
     }
 

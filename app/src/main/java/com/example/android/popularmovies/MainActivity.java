@@ -1,19 +1,16 @@
 package com.example.android.popularmovies;
 
-
-
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.android.popularmovies.utilities.TabsAdapter;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,28 +29,7 @@ public class MainActivity extends AppCompatActivity{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tabLayout.setElevation(3);
         }
-        tabLayout.addOnTabSelectedListener(tabSelected);
     }
-
-    private TabLayout.OnTabSelectedListener tabSelected = new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            Log.e("MainActivity", "Tab Position: " + tab.getPosition());
-            if(tab.getPosition() == 1){
-
-            }
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -65,12 +41,5 @@ public class MainActivity extends AppCompatActivity{
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
-        Log.e("MainActivity", "onDestroy");
     }
 }

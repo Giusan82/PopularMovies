@@ -95,10 +95,6 @@ public class DataProvider extends ContentProvider {
             throw new IllegalArgumentException("Task requires a name");
         }
         SQLiteDatabase database = dataDbHelper.getWritableDatabase();
-//        if(mCursor.getCount() == 0){
-//            //reset the entry count in sqlite_sequence table
-//            database.execSQL("delete from sqlite_sequence where name='" + TasksEntry.TABLE_NAME + "'");
-//        }
         // Insert the new item with the given values
         long id = database.insert(table_name, null, values);
         // If the ID is -1, then the insertion failed. Log an error and return null.
