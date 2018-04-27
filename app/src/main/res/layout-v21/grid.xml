@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/placeholder_poster_trasparent"/>
+            android:src="@drawable/placeholder_poster_trasparent" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -47,8 +47,8 @@
             android:paddingStart="@dimen/activity_horizontal_margin_list"
             android:paddingTop="@dimen/activity_vertical_margin_list"
             android:textStyle="bold"
-            tools:text="title"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            tools:text="title" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -63,7 +63,7 @@
             android:paddingStart="@dimen/activity_horizontal_margin_list"
             android:rating="3.5"
             android:stepSize="0.5"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_vote_average"
@@ -76,7 +76,7 @@
             android:paddingBottom="@dimen/activity_vertical_margin_list"
             android:paddingEnd="@dimen/activity_horizontal_margin_list"
             android:paddingStart="@dimen/activity_horizontal_margin_list"
-            tools:text="10"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:text="10" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

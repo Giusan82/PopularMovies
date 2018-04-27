@@ -98,7 +98,6 @@
     <string name="settings_any_genres_label">Any</string>
     <string name="settings_any_genres_value" translatable="false"></string>
 
-
     <!--Switch buttons  [CHAR LIMIT=NONE]-->
     <string name="settings_adult_content_label">Include Adult Content</string>
     <string name="settings_adult_content_key" translatable="false">include_adult</string>

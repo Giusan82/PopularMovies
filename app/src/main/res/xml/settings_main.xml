@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/category_general"
-        android:layout="@layout/preferences_category">
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        android:title="@string/category_general">
         <ListPreference
             android:defaultValue="@string/settings_language_default"
             android:key="@string/settings_language_key"
-            android:title="@string/settings_language_label"
-            />
+            android:title="@string/settings_language_label" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/category_filter"
-        android:layout="@layout/preferences_category">
+    <PreferenceCategory
+        android:layout="@layout/preferences_category"
+        android:title="@string/category_filter">
         <ListPreference
             android:defaultValue="@string/settings_orderBy_default"
             android:entries="@array/order_by_labels"
