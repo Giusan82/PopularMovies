@@ -1,51 +1,38 @@
 package com.example.android.popularmovies.utilities;
 
-
-import android.content.AsyncTaskLoader;
+import android.support.v4.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.List;
-
-public class DataLoader extends AsyncTaskLoader<List<MoviesData>> {
+public class DataLoader extends AsyncTaskLoader<MoviesData>{
     private String mUrl; //Query Url
     private Context mContext;
-    private List<MoviesData> mList;
-
-    /**
-     * Costructor
-     *
-     * @param context of the activity
-     * @param url     to load data from server
-     */
+    private MoviesData mData;
     public DataLoader(Context context, String url) {
         super(context);
         mContext = context;
         mUrl = url;
     }
-
     @Override
     protected void onStartLoading() {
-        if (mList != null) {
-            deliverResult(mList);
+        if (mData != null) {
+            deliverResult(mData);
         } else {
             forceLoad();
         }
     }
-
     @Override
-    public List<MoviesData> loadInBackground() {
+    public MoviesData loadInBackground() {
         if (mUrl == null) {
             Log.e("DataLoader", "Url is null");
             return null;
         } else {
-            return ApiRequest.fetchData(mContext, mUrl);
+            return NetUtils.fetchData(mContext, mUrl);
         }
     }
-
     @Override
-    public void deliverResult(List<MoviesData> data) {
-        mList = data;
+    public void deliverResult(MoviesData data) {
+        mData = data;
         super.deliverResult(data);
     }
 }

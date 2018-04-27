@@ -2,8 +2,8 @@ package com.example.android.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +12,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.android.popularmovies.utilities.MoviesData;
+import com.example.android.popularmovies.utilities.SharedData;
 
 import java.util.ArrayList;
 
@@ -26,13 +25,15 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
     private static final String NULL_VALUE = "null";
     private Context mContext;
     private ArrayList<MoviesData> mMoviesData;
+    private boolean isFavorite;
 
     /**
      * Constructor
      */
-    public GridAdapter(Context context, ArrayList<MoviesData> items) {
-        mContext = context;
-        mMoviesData = items;
+    public GridAdapter(Context context, ArrayList<MoviesData> items, boolean is_favorite) {
+        this.mContext = context;
+        this.mMoviesData = items;
+        this.isFavorite = is_favorite;
     }
 
     @Override
@@ -51,26 +52,48 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
         holder.rb_vote_average.setRating((float) current.getVote_Average() * 5 / 10);
         holder.tv_vote_average.setText(String.valueOf(current.getVote_Average()));
 
-        if (!current.getPoster_Path().equals(NULL_VALUE)) {
-            String imageUrl = IMAGE_BASE_URL + current.getPoster_Path();
-            Glide.with(mContext).load(imageUrl).listener(new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    return false;
-                }
+        if(current.getPoster_Path() != null){
+            if (!current.getPoster_Path().equals(NULL_VALUE)) {
+                String imageUrl = IMAGE_BASE_URL + current.getPoster_Path();
+//            Glide.with(mContext).load(imageUrl).listener(new RequestListener<String, GlideDrawable>() {
+//                @Override
+//                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                    return false;
+//                }
+//
+//                @Override
+//                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                    holder.tv_title.setVisibility(View.VISIBLE);
+//                    holder.tv_vote_average.setVisibility(View.VISIBLE);
+//                    holder.rb_vote_average.setVisibility(View.VISIBLE);
+//                    return false;
+//                }
+//            }).crossFade().dontTransform().into(holder.iv_poster);
 
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    holder.tv_title.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(imageUrl).asBitmap().dontAnimate().dontTransform().into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        if(resource != null){
+                            holder.iv_poster.setMinimumHeight(resource.getHeight());
+                            holder.iv_poster.setImageBitmap(resource);
+                        }
+                        holder.tv_title.setVisibility(View.VISIBLE);
+                        if(!isFavorite){
+                            holder.tv_vote_average.setVisibility(View.VISIBLE);
+                            holder.rb_vote_average.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                });
+
+            } else {
+                holder.tv_title.setVisibility(View.VISIBLE);
+                holder.iv_poster.setImageResource(R.drawable.placeholder_poster);
+                if(!isFavorite){
                     holder.tv_vote_average.setVisibility(View.VISIBLE);
                     holder.rb_vote_average.setVisibility(View.VISIBLE);
-                    return false;
                 }
-            }).crossFade().dontTransform().into(holder.iv_poster);
-        } else {
-            holder.tv_title.setVisibility(View.VISIBLE);
-            holder.tv_vote_average.setVisibility(View.VISIBLE);
-            holder.rb_vote_average.setVisibility(View.VISIBLE);
+            }
         }
         //here the views are not recycled. It avoids to see the previous image on the next view during the loading.
         holder.setIsRecyclable(false);
@@ -95,7 +118,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
             this.rb_vote_average = itemView.findViewById(R.id.ratingBar);
             this.tv_vote_average = itemView.findViewById(R.id.tv_vote_average);
             this.list_container = itemView.findViewById(R.id.list_container);
-            list_container.setOnClickListener(mViewListener);
+            this.list_container.setOnClickListener(mViewListener);
         }
 
         private View.OnClickListener mViewListener = new View.OnClickListener() {
@@ -105,8 +128,11 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
                 MoviesData current = mMoviesData.get(position);
                 //this open the DetailActivity
                 Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra(DetailsActivity.EXTRA_MOVIE_ID, current.getID());
-                intent.putExtra(DetailsActivity.EXTRA_MOVIE_TITLE, current.getTitle());
+                intent.putExtra(SharedData.EXTRA_MOVIE_ID, current.getID());
+                intent.putExtra(SharedData.EXTRA_MOVIE_TITLE, current.getTitle());
+                if(isFavorite){
+                    intent.putExtra(SharedData.EXTRA_MOVIE_TYPE, current.getDataType());
+                }
                 mContext.startActivity(intent);
             }
         };

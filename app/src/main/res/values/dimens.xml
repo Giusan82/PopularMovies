@@ -7,10 +7,13 @@
     <dimen name="footer">45dp</dimen>
     <dimen name="buttons_size">48dp</dimen>
     <dimen name="divider">1dp</dimen>
+    <dimen name="footer_bar">5dp</dimen>
 
     <dimen name="poster_size_height">211dp</dimen>
     <dimen name="poster_size_width">134dp</dimen>
     <dimen name="header_image_size_height">220dp</dimen>
+
+    <dimen name="video_preview_height">120dp</dimen>
 
     <dimen name="card_margin">5dp</dimen>
     <dimen name="text_card_margin">7dp</dimen>

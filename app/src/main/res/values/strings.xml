@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="content_authority">com.example.android.popularmovies</string>
+
+    <!-- Tabs -->
+    <string name="main_tab">Discover</string>
+    <string name="favorites_tab">Favorites</string>
+    <string name="videos_tab">Videos</string>
+    <string name="reviews_tab">Reviews</string>
 
     <!-- Settings Menu Item [CHAR LIMIT=NONE] -->
     <string name="settings_menu">Settings</string>
@@ -16,7 +23,9 @@
     <string name="close_button">Close</string>
     <!-- [CHAR LIMIT=NONE] -->
     <string name="refresh_button">Refresh</string>
-
+    <!--Dialog message-->
+    <string name="saving_successful">Marked Favorites</string>
+    <string name="deleting_successful">Unmarked Favorites</string>
     <!-- [CHAR LIMIT=NONE] -->
     <string name="no_internet">Check your connection or try again.</string>
     <!-- [CHAR LIMIT=NONE] -->
@@ -24,6 +33,9 @@
     <!-- [CHAR LIMIT=NONE] -->
     <string name="no_found_message"><b>No Movie or TV show found</b>\nPlease try again with a different research.</string>
     <string name="detail_no_found_message">The resource you requested could not be found.</string>
+    <string name="favorites_no_found_message"><b>No Favorite Movie or TV show found</b></string>
+    <string name="reviews_no_found_message"><b>No Reviews found</b></string>
+    <string name="videos_no_found_message"><b>No videos found</b></string>
 
     <!--Strings for DetailsActivity-->
     <string name="original_title"><![CDATA[<b>Original Title:</b>]]> %1$s</string>
@@ -36,6 +48,14 @@
     <string name="spoken_languages"><![CDATA[<b>Spoken Languages:</b>]]> %1$s</string>
     <string name="status"><![CDATA[<b>Status:</b>]]> %1$s</string>
     <string name="seasons_and_episodes"><![CDATA[<b>Seasons:</b>]]> %1$d | <![CDATA[<b>Episodes:</b>]]> %2$d</string>
+
+    <!--Videos List-->
+    <string name="video_type">Type: %1$s</string>
+
+    <!-- Buttons-->
+    <string name="add_favorites_button">Mark as Favorites</string>
+    <string name="remove_favorites_button">Unmark as Favorites</string>
+    <string name="more_details_button">Watch more...</string>
 
     <!-- Strings For Search Type spinner [CHAR LIMIT=10] -->
     <string name="search_movies">Movies</string>

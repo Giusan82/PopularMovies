@@ -51,6 +51,17 @@ public class MoviesData {
     private String mGenreID;
     private String mGenreName;
 
+    private int mDataType;
+
+    //Reviews
+    private String mAuthor;
+    private String mContent_Review;
+
+    //Videos
+    private String mVideoName;
+    private String mVideoKey;
+    private String mVideoType;
+
     /**
      * Constructors
      */
@@ -69,13 +80,30 @@ public class MoviesData {
     }
 
     public MoviesData(Context context,
+                      int id,
+                      String title,
+                      String poster_path,
+                      int data_type) {
+        this.mContext = context;
+        this.mID = id;
+        this.mTitle = title;
+        this.mPoster_Path = poster_path;
+        this.mDataType = data_type;
+    }
+
+    public MoviesData(Context context,
                       int page,
                       int total_page,
                       int total_results,
                       int id,
                       String title,
                       String poster_path,
-                      double vote_average) {
+                      double vote_average,
+                      String author,
+                      String content,
+                      String video_name,
+                      String video_type,
+                      String video_key) {
         this.mContext = context;
         this.mPage = page;
         this.mTotal_Page = total_page;
@@ -84,12 +112,14 @@ public class MoviesData {
         this.mTitle = title;
         this.mPoster_Path = poster_path;
         this.mVote_Average = vote_average;
+        this.mAuthor = author;
+        this.mContent_Review = content;
+        this.mVideoName = video_name;
+        this.mVideoType = video_type;
+        this.mVideoKey = video_key;
     }
 
     public MoviesData(Context context,
-                      int page,
-                      int total_page,
-                      int total_results,
                       int id,
                       String title,
                       String original_title,
@@ -112,9 +142,6 @@ public class MoviesData {
                       int seasons,
                       int episodes) {
         this.mContext = context;
-        this.mPage = page;
-        this.mTotal_Page = total_page;
-        this.mTotal_results = total_results;
         this.mID = id;
         this.mTitle = title;
         this.mOriginal_title = original_title;
@@ -246,6 +273,18 @@ public class MoviesData {
     public String getGenreID(){return mGenreID;}
 
     public String getGenreName(){return mGenreName;}
+
+    public int getDataType(){return mDataType;}
+
+    public String getAuthorReview(){return mAuthor;}
+
+    public String getContent_Review(){return mContent_Review;}
+
+    public String getVideoName(){return mVideoName;}
+
+    public String getVideoType(){return mVideoType;}
+
+    public String getVideoKey(){return mVideoKey;}
 
     //for getting the date conversion
     public String formatDate(String date) {

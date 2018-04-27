@@ -29,10 +29,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".DetailsActivity">
+        <activity android:name=".DetailsActivity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+
+        <provider
+            android:name=".data.DataProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false" />
+
+        <activity android:name=".MoreDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DetailsActivity" />
         </activity>
     </application>
 

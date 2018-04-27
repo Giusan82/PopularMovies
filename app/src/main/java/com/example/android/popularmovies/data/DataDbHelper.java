@@ -9,18 +9,18 @@ import com.example.android.popularmovies.data.DataContract.DataEntry;
 
 public class DataDbHelper extends SQLiteOpenHelper {
     //Name of the database file
-    private static final String DATABASE_NAME = "DataTracker.db";
+    private static final String DATABASE_NAME = "FavoritesMovie.db";
     //Database version.
     private static final int DATABASE_VERSION = 1;
 
     // this contains the SQL statement to create the table
-    private static final String SQL_CREATE_TABLE_DATA = "CREATE TABLE " + DataEntry.TABLE_NAME + " ("
+    private static final String SQL_CREATE_TABLE_FAVORITES = "CREATE TABLE " + DataEntry.TABLE_NAME + " ("
             + DataEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + DataEntry.COLUMN_NAME + " TEXT NOT NULL, "
             + DataEntry.COLUMN_CREATION_DATE + " REAL NOT NULL, "
-            + DataEntry.COLUMN_TASK_ID + " INTEGER NOT NULL, "
-            + DataEntry.COLUMN_X + " REAL NOT NULL, "
-            + DataEntry.COLUMN_Y + " REAL NOT NULL); ";
+            + DataEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, "
+            + DataEntry.COLUMN_TYPE + " INTEGER NOT NULL, "
+            + DataEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL); ";
 
     public DataDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,7 +29,7 @@ public class DataDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Execute the SQL statement
-        db.execSQL(SQL_CREATE_TABLE_DATA);
+        db.execSQL(SQL_CREATE_TABLE_FAVORITES);
     }
 
     @Override
