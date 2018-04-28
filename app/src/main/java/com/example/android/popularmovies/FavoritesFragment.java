@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.android.popularmovies.utilities.MoviesData;
 import com.example.android.popularmovies.data.DataContract.DataEntry;
+import com.example.android.popularmovies.utilities.SharedData;
 
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public class FavoritesFragment extends Fragment implements LoaderManager.LoaderC
         mNext_page_iv = rootView.findViewById(R.id.iv_navigate_next);
         mNext_page_iv.setVisibility(View.GONE);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(this.getResources().getInteger(R.integer.spanCount),
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(SharedData.numberOfColumns(getActivity()),
                 StaggeredGridLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(layoutManager);

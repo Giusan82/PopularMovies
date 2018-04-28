@@ -318,12 +318,6 @@
                     android:text="@string/more_details_button"
                     android:textSize="@dimen/text_subtitle" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/footer_bar"
-                android:background="@color/darkGrey"
-                app:layout_constraintBottom_toBottomOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

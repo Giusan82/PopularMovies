@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -82,7 +83,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
         mPrevius_page_iv.setOnClickListener(previousPage);
         mNext_page_iv.setOnClickListener(nextPage);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(this.getResources().getInteger(R.integer.spanCount),
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(SharedData.numberOfColumns(getActivity()),
                 StaggeredGridLayoutManager.VERTICAL);
 
         recyclerView.setLayoutManager(layoutManager);
