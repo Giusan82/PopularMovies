@@ -118,9 +118,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
                 Intent app = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_APP_URI + current.getVideoKey())); //source: https://stackoverflow.com/a/12439378
                 Intent web = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_URL + current.getVideoKey()));
                 try {
-                    mContext.startActivity(app);
+                    if (app.resolveActivity(mContext.getPackageManager()) != null) {
+                        mContext.startActivity(app);
+                    }
                 } catch (ActivityNotFoundException e) {
-                    mContext.startActivity(web);
+                    if (web.resolveActivity(mContext.getPackageManager()) != null) {
+                        mContext.startActivity(web);
+                    }
                     Log.e(LOG_TAG, "Youtube app not found, message: " + e);
                 }
             }

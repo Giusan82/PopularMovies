@@ -115,7 +115,9 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
                 if (isFavorite) {
                     intent.putExtra(SharedData.EXTRA_MOVIE_TYPE, current.getDataType());
                 }
-                mContext.startActivity(intent);
+                if (intent.resolveActivity(mContext.getPackageManager()) != null) {
+                    mContext.startActivity(intent);
+                }
             }
         };
     }
