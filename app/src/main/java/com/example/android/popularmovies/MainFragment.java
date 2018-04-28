@@ -249,6 +249,7 @@ public class MainFragment extends Fragment implements LoaderManager.LoaderCallba
     }
 
     //this builds the url
+    //The movies and tv shows are sorted using the query param "sort_by" because allows to add more options in the advanced search
     private URL builderUrl(String query) {
         String orderBy = sharedPrefs.getString(getString(R.string.settings_orderBy_key), getString(R.string.settings_orderBy_default));
         String genre = sharedPrefs.getString(getString(R.string.settings_genre_ids_key), getString(R.string.settings_genre_ids_default));
